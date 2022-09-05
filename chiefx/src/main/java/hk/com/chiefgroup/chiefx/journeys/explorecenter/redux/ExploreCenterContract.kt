@@ -10,7 +10,8 @@ public abstract class ExploreCenterRepository: BaseRepository() {
 }
 
 
-public abstract class  ExploreCenterRouter: BaseRouter() {
+public abstract class  ExploreCenterRouter<ActionType>: BaseRouter() {
+    abstract fun navigateToResults(action: ActionType)
     abstract val navigateToResults: Flow<Boolean>
 }
 

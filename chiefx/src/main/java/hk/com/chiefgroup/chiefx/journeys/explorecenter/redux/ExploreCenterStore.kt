@@ -16,7 +16,7 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
         ExploreCenterView,
         WeakReference<ExploreCenterView>,
         ExploreCenterState,
-        ExploreCenterRouter,
+        ExploreCenterRouterImplementation,
         RepositoryType,
         HashMap<ExploreCenterAction, ExploreCenterSagaImplementation>,
         HashMap<ExploreCenterAction, ExploreCenterReducerImplementation>,
@@ -26,8 +26,8 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     companion object {
         private val TAG = "ExploreCenterStore"
     }
-    private var _router: ExploreCenterRouter? = null
-    public override val router: ExploreCenterRouter?
+    private var _router: ExploreCenterRouterImplementation? = null
+    public override val router: ExploreCenterRouterImplementation?
         get() {
             return _router
         }
@@ -39,8 +39,8 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
 
         }
 
-    private var _routers: HashMap<String, ExploreCenterRouter?> = HashMap()
-    override var routers: HashMap<String, ExploreCenterRouter?>
+    private var _routers: HashMap<String, ExploreCenterRouterImplementation?> = HashMap()
+    override var routers: HashMap<String, ExploreCenterRouterImplementation?>
         get() = _routers
         set(value) {}
     private var _views: ArrayList<WeakReference<ExploreCenterView>> = ArrayList()
@@ -140,7 +140,8 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
         compact()
         views.forEach {
             it.get()?.let { view ->
-                val reslut = reducers[action]?.willUpdateView(action, state.value, view)
+                val newState = reducers[action]?.willUpdateView(action, state.value, view)
+                _state.emit(newState)
             }
         }
 

@@ -5,6 +5,9 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterSt
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class ExploreCenterGetExploresSaga(override val store: ExploreCenterStoreImplementation?): ExploreCenterSagaImplementation(store) {
     private val _action: ExploreCenterAction = getExplores()
@@ -17,7 +20,14 @@ class ExploreCenterGetExploresSaga(override val store: ExploreCenterStoreImpleme
         state: ExploreCenterState?,
         view: List<ExploreCenterView>?
     ) {
-        val result = store?.repository?.getExplores()
-        store?.put(action, result)
+        val executor = Executors.newSingleThreadScheduledExecutor()
+        executor.schedule({
+            runBlocking {
+                val result = store?.repository?.getExplores()
+                store?.put(action, result)
+            }
+            executor.shutdown()
+        }, 2, TimeUnit.SECONDS)
+
     }
 }

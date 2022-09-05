@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), ExploreCenterView {
         // in traditional activity scenario
         store.register(this)
         store.viewDidLoad(this)
-        store.dispatch(getExplores())
     }
 
     override fun updateExplores(exploreState: ExploreCenterState) {
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity(), ExploreCenterView {
     override var key: String = "MainActivity"
 }
 
-@Preview(name = "My App")
+
 @Composable
 fun MyApp(
     store: ExploreCenterStoreImplementation
@@ -93,7 +92,7 @@ fun MyApp(
     }
 }
 
-@Preview(name = "QuestionDestination")
+
 @Composable
 fun QuestionDestination(
     store: ExploreCenterStoreImplementation,
@@ -115,6 +114,7 @@ fun QuestionDestination(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text = "What do you call a mexican cheese?")
+        Text("${store.state.collectAsState().value?.isLoading}")
         TextField(
             value = textFieldState.value,
             onValueChange = { textFieldState.value = it }
@@ -129,7 +129,7 @@ fun QuestionDestination(
     }
 }
 
-@Preview(name = "ResultDestination")
+
 @Composable
 fun ResultDestination(
     store: ExploreCenterStoreImplementation

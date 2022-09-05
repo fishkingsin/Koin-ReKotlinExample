@@ -19,7 +19,9 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
         state: ExploreCenterState?,
         view: ExploreCenterView
     ): ExploreCenterState? {
-        return state
+        var newState: ExploreCenterState = state ?: ExploreCenterState()
+        newState.isLoading = true
+        return newState
     }
 
     override fun onUpdate(
@@ -27,7 +29,9 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
         state: ExploreCenterState?,
         payload: Any?
     ): ExploreCenterState? {
-        var newState: ExploreCenterState = state ?: ExploreCenterState("Hello")
+        var newState: ExploreCenterState = state ?: ExploreCenterState()
+        newState.name = "Hello World"
+        newState.isLoading = false
         return newState
     }
 
@@ -38,6 +42,7 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
     ) {
         Log.d("GetExploresReducer","updateViews $action $state $view")
         if (action == this._action && state != null) {
+            store?.router?.navigateToResults(action)
             view.updateName(state.name)
         }
     }
