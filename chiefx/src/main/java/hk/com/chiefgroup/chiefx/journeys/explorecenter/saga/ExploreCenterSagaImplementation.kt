@@ -4,13 +4,11 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAc
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterSaga
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStore
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
 
-class ExploreCenterSagaImplementation: ExploreCenterSaga<ExploreCenterStore, ExploreCenterAction, ExploreCenterState, ExploreCenterView> {
-    override var action: ExploreCenterAction
-        get() = TODO("Not yet implemented")
-        set(value) {}
-    override var store: ExploreCenterStore?
+open class ExploreCenterSagaImplementation(override val store: ExploreCenterStoreImplementation?): ExploreCenterSaga<ExploreCenterStoreImplementation, ExploreCenterAction, ExploreCenterState, ExploreCenterView>() {
+    open var action: ExploreCenterAction
         get() = TODO("Not yet implemented")
         set(value) {}
 }

@@ -7,5 +7,5 @@ abstract class BaseReducer<
 > {
     open fun willUpdateView(action: ActionType, state: StateType?, view: ViewType): StateType? { return null }
     open fun onUpdate(action: ActionType, state: StateType?, payload: Any?): StateType? { return null }
-    fun updateView(action: ActionType, state: StateType?, view: ViewType) {}
+    open fun updateView(action: ActionType, state: StateType?, view: ViewType) {}
 }

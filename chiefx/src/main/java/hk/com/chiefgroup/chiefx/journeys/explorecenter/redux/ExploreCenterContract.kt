@@ -1,25 +1,30 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.redux;
 
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.*
 
-public interface ExploreCenterRepository: BaseRepository {
+public abstract class ExploreCenterRepository: BaseRepository() {
+    abstract suspend fun getExplores(): Result<Any>
 }
 
 
-public interface ExploreCenterRouter: BaseRouter {
+public abstract class  ExploreCenterRouter: BaseRouter() {
 
 }
 
-public interface ExploreCenterSaga<StoreType, ActionType, StateType, ViewType>: BaseSaga<ActionType, StateType, ViewType> {
-    var action: ActionType
-    var store: StoreType?
+public abstract class  ExploreCenterSaga<StoreType, ActionType, StateType, ViewType>:
+    BaseSaga<ActionType, StateType, ViewType>() {
+    abstract val store: StoreType?
 }
 
-public interface ExploreCenterReducer<StoreType, ActionType, StateType, ViewType>: BaseReducer<ActionType, StateType, ViewType> {
-    var action: ActionType
-    var store: StoreType?
+public abstract class  ExploreCenterReducer<StoreType, ActionType, StateType, ViewType>:
+    BaseReducer<ActionType, StateType, ViewType>() {
+    abstract val store: StoreType?
 }
 
 public interface ExploreCenterView: BaseView {
-    var exploreCenterStore: ExploreCenterStore
+    abstract var exploreCenterStore: ExploreCenterStoreImplementation
+
+    abstract fun updateExplores(exploreState: ExploreCenterState)
+    abstract fun updateName(name: String)
 }

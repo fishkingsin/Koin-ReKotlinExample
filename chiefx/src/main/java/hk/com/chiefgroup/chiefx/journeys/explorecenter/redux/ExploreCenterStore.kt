@@ -1,13 +1,12 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.redux
 
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.none
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.state
+import android.util.Log
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterReducerImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.saga.ExploreCenterSagaImplementation
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.BaseStore
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.State
+import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
 
 open class ExploreCenterStore<RepositoryType> : BaseStore<
@@ -22,28 +21,36 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
         ExploreCenterSagaImplementation,
         ExploreCenterReducerImplementation,
         >() {
+    companion object {
+        private val TAG = "ExploreCenterStore"
+    }
     private var _state: ExploreCenterState? = null
     override var state: ExploreCenterState?
         get() = _state
-        set(value) { _state = value }
+        set(value) {
+            _state = value
+        }
+
+    private var _routers: HashMap<String, ExploreCenterRouter?> = HashMap()
     override var routers: HashMap<String, ExploreCenterRouter?>
-        get() = TODO("Not yet implemented")
+        get() = _routers
         set(value) {}
-    override var router: ExploreCenterRouter?
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    private var _views: ArrayList<WeakReference<ExploreCenterView>> = ArrayList()
     override var views: ArrayList<WeakReference<ExploreCenterView>>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+        get() = _views
+        set(value) { _views = value }
+    private var _repository: RepositoryType? = null
     override var repository: RepositoryType?
-        get() = TODO("Not yet implemented")
-        set(value) {}
+        get() = _repository
+        set(value) { _repository = value }
+    private var _sagas: HashMap<ExploreCenterAction, ExploreCenterSagaImplementation> = HashMap()
     override var sagas: HashMap<ExploreCenterAction, ExploreCenterSagaImplementation>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+        get() = _sagas
+        set(value) { _sagas = value }
+    private var _reducers: HashMap<ExploreCenterAction, ExploreCenterReducerImplementation> = HashMap()
     override var reducers: HashMap<ExploreCenterAction, ExploreCenterReducerImplementation>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+        get() = _reducers
+        set(value) { _reducers = value }
 
 
     open override fun registerRepository(repository: RepositoryType) {
@@ -110,21 +117,35 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     }
 
     open override fun updateViews(action: ExploreCenterAction) {
-//        debugLog("------before compact views \(views)")
+        Log.d(TAG,"updateViews ------before compact views $views")
         compact()
         views.forEach {
             val view = it.get()
-            if (view!=null) {
+            if (view != null) {
                 updateView(action, view)
             }
         }
-//        debugLog("------after compact views \(views)")
+        Log.d(TAG,"updateViews ------after compact views $views")
     }
 
-    open override fun dispatch(action: ExploreCenterAction) {
+    open override fun dispatch(action: ExploreCenterAction): Unit = runBlocking {
         compact()
-//        debugLog("\(String(describing: sagas[action]))")
-        
+        views.forEach {
+            it.get()?.let { view ->
+                val reslut = reducers[action]?.willUpdateView(action, state, view)
+            }
+        }
+
+        sagas[action]?.onDispatch(
+            action,
+            state,
+            _views.mapNotNull{
+                return@mapNotNull it.get()
+            }
+        )
+
+        Log.d(TAG,"${sagas[action]}")
+
     }
 
     open override fun updateView(action: ExploreCenterAction, view: ExploreCenterView) {
@@ -137,7 +158,7 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     }
 
     open override fun viewDidAppear(view: ExploreCenterView) {
-//        updateView(state(State.viewDidAppear), view)
+        updateView(state(State.viewDidAppear), view)
     }
 
     open override fun viewWillAppear(view: ExploreCenterView) {
@@ -145,38 +166,32 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     }
 
     open override fun viewDeinit(view: ExploreCenterView) {
-//        debugLog("-------------\(#funtion) remove \(String(describing: view))-------------")
+        Log.d(TAG,"-------------remove $view)-------------")
         updateView(state(State.viewDeinit), view)
         compact()
         if (views.isEmpty()) {
             dispose()
         } else {
-
+            Log.d(TAG,"-------------\n$this views ${views.size}\n-------------")
         }
     }
 
     open override fun dispose() {
         resetModule()
-//        debugLog("-------------\(#file) \(#funtion)-------------")
-//        debugLog("-------------\n\(String(describing: self)) views \(views.count)\n-------------")
+        
+        Log.d(TAG,"-------------\n$this views ${views.size}\n-------------")
         views.clear()
         sagas.clear()
         reducers.clear()
         repository = null
-//        debugLog("-------------\n\(String(describing: self)) sagas \(sagas.count)\n-------------")
-//        debugLog("-------------\n\(String(describing: self)) reducers \(reducers.count)\n-------------")
+        Log.d(TAG,"-------------\n$this sagas ${sagas.size}\n-------------")
+        Log.d(TAG,"-------------\n$this reducers ${reducers.size}\n-------------")
     }
 
     // Worker saga will be fired on USER_FETCH_REQUESTED actions
     public override fun put(action: ExploreCenterAction, payload: Any?) {
-        reducers[action]?.onUpdate(action, state, payload)
+        state = reducers[action]?.onUpdate(action, state, payload)
         updateViews(action)
-//        debugLog("put(ActionType: \(action), Any: \(payload))")
-//        Task {
-//            await _threadSafeExecute {
-//                state = reducers[action]?.onUpdate(action, state: state, payload: payload)
-//                updateViews(action)
-//            }
-//        }
+        Log.d(TAG,"put(ActionType: $action, Any: $payload)")
     }
 }

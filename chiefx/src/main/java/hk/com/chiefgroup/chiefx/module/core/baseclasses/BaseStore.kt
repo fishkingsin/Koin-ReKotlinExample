@@ -16,7 +16,6 @@ abstract class BaseStore<
         > {
     internal abstract var state: StateType?
     internal abstract var routers: HashMap<String, RouterType?>
-    internal abstract var router: RouterType?
     internal abstract var views: ArrayList<ViewType>
     internal abstract var repository: RepositoryType?
     internal abstract var sagas: SagaMapType
