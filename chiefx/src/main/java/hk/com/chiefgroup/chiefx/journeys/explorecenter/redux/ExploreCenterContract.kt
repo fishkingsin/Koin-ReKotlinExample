@@ -2,6 +2,8 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.redux;
 
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 
 public abstract class ExploreCenterRepository: BaseRepository() {
     abstract suspend fun getExplores(): Result<Any>
@@ -9,7 +11,7 @@ public abstract class ExploreCenterRepository: BaseRepository() {
 
 
 public abstract class  ExploreCenterRouter: BaseRouter() {
-
+    abstract val navigateToResults: Flow<Boolean>
 }
 
 public abstract class  ExploreCenterSaga<StoreType, ActionType, StateType, ViewType>:

@@ -6,6 +6,8 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterRedu
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.saga.ExploreCenterSagaImplementation
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.BaseStore
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.State
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
 
@@ -24,11 +26,17 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     companion object {
         private val TAG = "ExploreCenterStore"
     }
-    private var _state: ExploreCenterState? = null
-    override var state: ExploreCenterState?
+    private var _router: ExploreCenterRouter? = null
+    public override val router: ExploreCenterRouter?
+        get() {
+            return _router
+        }
+
+    private var _state: MutableStateFlow<ExploreCenterState?> = MutableStateFlow(null)
+    public override var state: StateFlow<ExploreCenterState?>
         get() = _state
         set(value) {
-            _state = value
+
         }
 
     private var _routers: HashMap<String, ExploreCenterRouter?> = HashMap()
@@ -98,8 +106,8 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
         }
     }
 
-    public override fun resetModule() {
-        state = ExploreCenterState()
+    public override fun resetModule(): Unit = runBlocking {
+        _state.emit(ExploreCenterState())
     }
 
     public override fun compact() {
@@ -132,13 +140,13 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
         compact()
         views.forEach {
             it.get()?.let { view ->
-                val reslut = reducers[action]?.willUpdateView(action, state, view)
+                val reslut = reducers[action]?.willUpdateView(action, state.value, view)
             }
         }
 
         sagas[action]?.onDispatch(
             action,
-            state,
+            state.value,
             _views.mapNotNull{
                 return@mapNotNull it.get()
             }
@@ -149,12 +157,12 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     }
 
     open override fun updateView(action: ExploreCenterAction, view: ExploreCenterView) {
-        reducers[action]?.updateView(action, state, view)
+        reducers[action]?.updateView(action, state.value, view)
     }
 
     open override fun viewDidLoad(view: ExploreCenterView) {
         updateView(none(), view)
-        reducers.keys.forEach { reducers[it]?.updateView(it, state, view) }
+        reducers.keys.forEach { reducers[it]?.updateView(it, state.value, view) }
     }
 
     open override fun viewDidAppear(view: ExploreCenterView) {
@@ -189,8 +197,9 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     }
 
     // Worker saga will be fired on USER_FETCH_REQUESTED actions
-    public override fun put(action: ExploreCenterAction, payload: Any?) {
-        state = reducers[action]?.onUpdate(action, state, payload)
+    public override fun put(action: ExploreCenterAction, payload: Any?): Unit= runBlocking {
+        val newState = reducers[action]?.onUpdate(action, state.value, payload)
+        _state.emit(newState)
         updateViews(action)
         Log.d(TAG,"put(ActionType: $action, Any: $payload)")
     }

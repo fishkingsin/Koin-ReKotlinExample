@@ -1,5 +1,6 @@
 package hk.com.chiefgroup.chiefx.module.core.baseclasses
 
+import kotlinx.coroutines.flow.StateFlow
 import java.lang.ref.WeakReference
 
 abstract class BaseStore<
@@ -14,7 +15,8 @@ abstract class BaseStore<
         SagaType,
         ReducerType,
         > {
-    internal abstract var state: StateType?
+    internal abstract val router: RouterType?
+    internal abstract var state: StateFlow<StateType?>
     internal abstract var routers: HashMap<String, RouterType?>
     internal abstract var views: ArrayList<ViewType>
     internal abstract var repository: RepositoryType?
