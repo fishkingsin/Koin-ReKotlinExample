@@ -30,7 +30,6 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
         payload: Any?
     ): ExploreCenterState? {
         var newState: ExploreCenterState = state ?: ExploreCenterState()
-        newState.name = "Hello World"
         newState.isLoading = false
         return newState
     }
@@ -43,7 +42,10 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
         Log.d("GetExploresReducer","updateViews $action $state $view")
         if (action == this._action && state != null) {
             store?.router?.navigateToResults(action)
-            view.updateName(state.name)
+            state.exploresReposonse?.REF?.let {
+                view.updateName(it)
+            }
+
         }
     }
 

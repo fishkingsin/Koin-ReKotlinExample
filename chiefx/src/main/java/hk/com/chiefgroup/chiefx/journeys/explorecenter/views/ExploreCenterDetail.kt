@@ -12,13 +12,15 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreI
 
 @Composable
 fun ExploreCenterDetail(
-    store: ExploreCenterStoreImplementation
+    viewModel: ExploreCenterViewModel
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        store.state.collectAsState().value?.name?.let { Text(text = it) }
+        viewModel.records.firstOrNull()?.Records?.firstOrNull()?.let {
+            Text(text = it.Name ?: "")
+        }
     }
 }

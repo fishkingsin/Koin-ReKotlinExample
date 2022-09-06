@@ -8,13 +8,14 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreI
 
 @Composable
 fun ExploreCenter(
-    store: ExploreCenterStoreImplementation
+    viewModel: ExploreCenterViewModel
 ) {
     val navController = rememberNavController()
     NavHost(navController, startDestination = "explore center landing") {
         composable("explore center landing") {
             ExploreCenterLanding(
-                store = store,
+                viewModel,
+
                 // You could pass the nav controller to further composables,
                 // but I like keeping nav logic in a single spot by using the hoisting pattern
                 // hoisting probably won't work as well in deep hierarchies,
@@ -24,7 +25,8 @@ fun ExploreCenter(
         }
         composable("result") {
             ExploreCenterDetail(
-                store
+                viewModel
+
             )
         }
     }

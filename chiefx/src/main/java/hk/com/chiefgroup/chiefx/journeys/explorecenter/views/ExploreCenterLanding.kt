@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun ExploreCenterLanding(
-    store: ExploreCenterStoreImplementation,
+    viewModel: ExploreCenterViewModel,
     onConfirm: () -> Unit
 ) {
     val textFieldState = remember { mutableStateOf(TextFieldValue()) }
@@ -26,9 +26,9 @@ fun ExploreCenterLanding(
     // We only want the event stream to be attached once
     // even if there are multiple re-compositions
     LaunchedEffect("key") { // probably is a better way to set the key than hardcoding key...
-        store.router?.navigateToResults
-            ?.onEach { onConfirm() }
-            ?.collect()
+        viewModel.navigateToExploreCenterDetails
+            .onEach { onConfirm() }
+            .collect()
     }
 
     Column(
@@ -37,15 +37,15 @@ fun ExploreCenterLanding(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text = "What do you call a mexican cheese?")
-        Text("${store.state.collectAsState().value?.isLoading}")
+        Text("${viewModel.isLoading}")
         TextField(
             value = textFieldState.value,
             onValueChange = { textFieldState.value = it }
         )
-        if (store.state.collectAsState().value?.isLoading == true) {
+        if (viewModel.isLoading == true) {
             CircularProgressIndicator()
         } else {
-            Button(onClick = { store.dispatch(getExplores()) }) {
+            Button(onClick = { viewModel.getExplores() }) {
                 Text(text = "Confirm")
             }
         }
