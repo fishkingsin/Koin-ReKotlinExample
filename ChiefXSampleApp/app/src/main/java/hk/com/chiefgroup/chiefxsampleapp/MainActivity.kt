@@ -26,9 +26,8 @@ import kotlinx.coroutines.flow.onEach
 class CXExploreCenterStoreImplementation: ExploreCenterStoreImplementation() {
 
 }
-class MainActivity : AppCompatActivity(), ExploreCenterView {
-    override lateinit var exploreCenterStore: ExploreCenterStoreImplementation
-    override var key: String = "MainActivity"
+class MainActivity : AppCompatActivity() {
+    private lateinit var exploreCenterStore: ExploreCenterStoreImplementation
 
     private val model: ExploreCenterViewModel by viewModels {
         ExploreCenterViewModelFactory(exploreCenterStore)
@@ -39,43 +38,16 @@ class MainActivity : AppCompatActivity(), ExploreCenterView {
 
         val store = CXExploreCenterStoreImplementation()
         exploreCenterStore = store
-
+        exploreCenterStore.registerRepository(ExploreCenterRepositoryImplementation())
+        exploreCenterStore.registerReducer(ExploreCenterGetExploresReducer(exploreCenterStore))
+        exploreCenterStore.registerSaga(ExploreCenterGetExploresSaga(exploreCenterStore))
         setContent {
             MaterialTheme {
                 // in android compose scenario
                 ExploreCenter(model)
             }
         }
-
-        exploreCenterStore.registerRepository(ExploreCenterRepositoryImplementation())
-        exploreCenterStore.registerReducer(ExploreCenterGetExploresReducer(exploreCenterStore))
-        exploreCenterStore.registerSaga(ExploreCenterGetExploresSaga(exploreCenterStore))
-        // in traditional activity scenario
-        exploreCenterStore.register(this)
-        exploreCenterStore.viewDidLoad(this)
     }
-
-    override fun updateExplores(exploreState: ExploreCenterState) {
-        Log.d("MainActivity", "updateExplores $exploreState")
-    }
-
-    override fun updateName(name: String) {
-        Log.d("MainActivity", "updateName $name")
-    }
-
-    override fun hideLoadingIndicator(type: String) {
-        Log.d("MainActivity", "hideLoadingIndicator")
-    }
-
-    override fun showLoadingIndicator(type: String) {
-        Log.d("MainActivity", "showLoadingIndicator")
-    }
-
-    override fun showErrorMessage(type: String, errorCode: String, warnings: List<String>?) {
-        Log.d("MainActivity", "showErrorMessage $errorCode")
-    }
-
-
 }
 
 

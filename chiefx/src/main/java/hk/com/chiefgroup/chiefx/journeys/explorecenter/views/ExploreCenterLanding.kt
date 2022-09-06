@@ -3,14 +3,12 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import kotlinx.coroutines.flow.collect
@@ -52,4 +50,14 @@ fun ExploreCenterLanding(
     }
 }
 
+class MockExploreCenterStoreImplementation: ExploreCenterStoreImplementation() {
 
+}
+
+@Preview
+@Composable
+fun TestUIPreview() {
+    MaterialTheme() {
+        ExploreCenterLanding(ExploreCenterViewModel(MockExploreCenterStoreImplementation()), {})
+    }
+}

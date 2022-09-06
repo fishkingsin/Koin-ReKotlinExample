@@ -26,7 +26,7 @@ public abstract class  ExploreCenterReducer<StoreType, ActionType, StateType, Vi
 }
 
 public interface ExploreCenterView: BaseView {
-    abstract var exploreCenterStore: ExploreCenterStoreImplementation
+    abstract var exploreCenterStore: ExploreCenterStoreImplementation?
 
     abstract fun updateExplores(exploreState: ExploreCenterState)
     abstract fun updateName(name: String)

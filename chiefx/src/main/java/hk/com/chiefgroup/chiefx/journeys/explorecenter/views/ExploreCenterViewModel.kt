@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.runBlocking
 
 
-class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStoreImplementation): ViewModel(), ExploreCenterView {
+class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStoreImplementation? = null): ViewModel(), ExploreCenterView {
 
     init {
-        exploreCenterStore.register(this)
+        exploreCenterStore?.register(this)
     }
 
     var records by mutableStateOf(listOf<ExploresRecord>())
@@ -51,7 +51,7 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
     }
 
     fun getExplores() {
-        exploreCenterStore.dispatch(hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores())
+        exploreCenterStore?.dispatch(hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores())
     }
 
     override var key: String = "ExploreCenterViewModel"
