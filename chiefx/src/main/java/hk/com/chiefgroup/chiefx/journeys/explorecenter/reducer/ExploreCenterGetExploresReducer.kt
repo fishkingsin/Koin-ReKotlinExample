@@ -41,7 +41,7 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
     ) {
         Log.d("GetExploresReducer","updateViews $action $state $view")
         if (action == this._action && state != null) {
-            store?.router?.navigateToResults(action)
+            store?.router?.route(action)
             state.exploresReposonse?.REF?.let {
                 view.updateName(it)
             }

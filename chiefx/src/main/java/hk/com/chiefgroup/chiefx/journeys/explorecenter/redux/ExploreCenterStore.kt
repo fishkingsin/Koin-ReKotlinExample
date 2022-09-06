@@ -32,7 +32,7 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
             return _router
         }
 
-    private var _state: MutableStateFlow<ExploreCenterState?> = MutableStateFlow(null)
+    internal var _state: MutableStateFlow<ExploreCenterState?> = MutableStateFlow(null)
     public override var state: StateFlow<ExploreCenterState?>
         get() = _state
         set(value) {

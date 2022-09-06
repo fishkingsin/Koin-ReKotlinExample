@@ -18,7 +18,7 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
         exploreCenterStore.register(this)
     }
 
-    var records by mutableStateOf(listOf<ExploresRecord>())
+    var records by mutableStateOf(listOf<ExploreCategory>())
     var isLoading by mutableStateOf(false)
 
     val navigateToExploreCenterDetails: Flow<Boolean> = exploreCenterStore.router!!.navigateToResults

@@ -12,8 +12,7 @@ public abstract class ExploreCenterRepository: BaseRepository() {
 
 
 public abstract class  ExploreCenterRouter<ActionType>: BaseRouter() {
-    abstract fun navigateToResults(action: ActionType)
-    abstract val navigateToResults: Flow<Boolean>
+    abstract fun route(action: ActionType)
 }
 
 public abstract class  ExploreCenterSaga<StoreType, ActionType, StateType, ViewType>:

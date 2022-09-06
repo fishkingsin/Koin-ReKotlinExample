@@ -7,9 +7,9 @@ import kotlinx.coroutines.runBlocking
 
 class ExploreCenterRouterImplementation: ExploreCenterRouter<ExploreCenterAction>() {
     private val _navigateToResults = Channel<Boolean>(Channel.BUFFERED)
-    override fun navigateToResults(action: ExploreCenterAction): Unit = runBlocking {
+    override fun route(action: ExploreCenterAction): Unit = runBlocking {
         _navigateToResults.send(true)
     }
 
-    override val navigateToResults: Flow<Boolean> = _navigateToResults.receiveAsFlow()
+    val navigateToResults: Flow<Boolean> = _navigateToResults.receiveAsFlow()
 }

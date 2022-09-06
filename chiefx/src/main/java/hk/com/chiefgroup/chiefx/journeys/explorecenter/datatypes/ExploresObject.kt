@@ -7,6 +7,6 @@ data class ExploresObject (
 
   @SerializedName("Result"  ) var Result  : String?            = null,
   @SerializedName("Count"   ) var Count   : Int?               = null,
-  @SerializedName("Records" ) var Records : ArrayList<ExploresRecord> = arrayListOf()
+  @SerializedName("Records" ) var Records : ArrayList<ExploreCategory> = arrayListOf()
 
 )
