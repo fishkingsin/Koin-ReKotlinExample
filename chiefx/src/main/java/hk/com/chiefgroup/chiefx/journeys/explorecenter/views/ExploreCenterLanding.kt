@@ -56,7 +56,7 @@ class MockExploreCenterStoreImplementation: ExploreCenterStoreImplementation() {
 
 @Preview
 @Composable
-fun TestUIPreview() {
+fun TestExploreCenterLandingPreview() {
     MaterialTheme() {
         ExploreCenterLanding(ExploreCenterViewModel(MockExploreCenterStoreImplementation()), {})
     }

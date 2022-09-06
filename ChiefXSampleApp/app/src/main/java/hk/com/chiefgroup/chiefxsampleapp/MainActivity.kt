@@ -39,7 +39,11 @@ class MainActivity : AppCompatActivity() {
         val store = CXExploreCenterStoreImplementation()
         exploreCenterStore = store
         exploreCenterStore.registerRepository(ExploreCenterRepositoryImplementation())
-        exploreCenterStore.registerReducer(ExploreCenterGetExploresReducer(exploreCenterStore))
+        exploreCenterStore.registerReducers(listOf(
+            ExploreCenterGetExploresReducer(exploreCenterStore),
+            ExploreCenterLoadingReducer(exploreCenterStore),
+            ExploreCenterLoadedReducer(exploreCenterStore)
+        ))
         exploreCenterStore.registerSaga(ExploreCenterGetExploresSaga(exploreCenterStore))
         setContent {
             MaterialTheme {

@@ -12,21 +12,16 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.runBlocking
 
 
-class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStoreImplementation? = null): ViewModel(), ExploreCenterView {
+class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStoreImplementation): ViewModel(), ExploreCenterView {
 
     init {
-        exploreCenterStore?.register(this)
+        exploreCenterStore.register(this)
     }
 
     var records by mutableStateOf(listOf<ExploresRecord>())
     var isLoading by mutableStateOf(false)
 
-    private val _navigateToExploreCenterDetails = Channel<Boolean>(Channel.BUFFERED)
-    val navigateToExploreCenterDetails: Flow<Boolean> = _navigateToExploreCenterDetails.receiveAsFlow()
-
-    fun navigateToExploreCenterDetails(action: ExploreCenterAction): Unit = runBlocking {
-        _navigateToExploreCenterDetails.send(true)
-    }
+    val navigateToExploreCenterDetails: Flow<Boolean> = exploreCenterStore.router!!.navigateToResults
 
     override fun updateExplores(exploreState: ExploreCenterState) {
         exploreState.exploresReposonse?.Object?.Records?.let {
@@ -43,7 +38,7 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
     }
 
     override fun showLoadingIndicator(type: String) {
-        isLoading = false
+        isLoading = true
     }
 
     override fun showErrorMessage(type: String, errorCode: String, warnings: List<String>?) {
@@ -51,7 +46,7 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
     }
 
     fun getExplores() {
-        exploreCenterStore?.dispatch(hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores())
+        exploreCenterStore.dispatch(hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores())
     }
 
     override var key: String = "ExploreCenterViewModel"
