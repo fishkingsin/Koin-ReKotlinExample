@@ -25,8 +25,7 @@ fun ExploreCenter(
         }
         composable("result") {
             ExploreCenterDetail(
-                viewModel
-
+                viewModel.records.firstOrNull()?.Records ?: emptyList()
             )
         }
     }

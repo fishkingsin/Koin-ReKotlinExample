@@ -19,7 +19,7 @@ fun ExploreCenterLanding(
     viewModel: ExploreCenterViewModel,
     onConfirm: () -> Unit
 ) {
-//    val textFieldState = remember { mutableStateOf(TextFieldValue()) }
+    val textFieldState = remember { mutableStateOf(TextFieldValue()) }
 
     // We only want the event stream to be attached once
     // even if there are multiple re-compositions
@@ -28,26 +28,26 @@ fun ExploreCenterLanding(
             .onEach { onConfirm() }
             .collect()
     }
-    ExploreCenterCategoryVerticleListView(viewModel.records)
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.SpaceEvenly,
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//    ) {
-//        Text(text = "What do you call a mexican cheese?")
-//        Text("${viewModel.isLoading}")
-//        TextField(
-//            value = textFieldState.value,
-//            onValueChange = { textFieldState.value = it }
-//        )
-//        if (viewModel.isLoading == true) {
-//            CircularProgressIndicator()
-//        } else {
-//            Button(onClick = { viewModel.getExplores() }) {
-//                Text(text = "Confirm")
-//            }
-//        }
-//    }
+//    ExploreCenterCategoryVerticleListView(viewModel.records)
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(text = "What do you call a mexican cheese?")
+        Text("${viewModel.isLoading}")
+        TextField(
+            value = textFieldState.value,
+            onValueChange = { textFieldState.value = it }
+        )
+        if (viewModel.isLoading == true) {
+            CircularProgressIndicator()
+        } else {
+            Button(onClick = { viewModel.getExplores() }) {
+                Text(text = "Confirm")
+            }
+        }
+    }
 }
 
 class MockExploreCenterStoreImplementation: ExploreCenterStoreImplementation() {

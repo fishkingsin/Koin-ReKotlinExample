@@ -24,8 +24,18 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
 class CXExploreCenterStoreImplementation: ExploreCenterStoreImplementation() {
-
+    init {
+        registerRepository(ExploreCenterRepositoryImplementation())
+        registerReducers(listOf(
+            ExploreCenterGetExploresReducer(this),
+            ExploreCenterLoadingReducer(this),
+            ExploreCenterLoadedReducer(this)
+        ))
+        registerSaga(ExploreCenterGetExploresSaga(this))
+    }
 }
+
+//
 class MainActivity : AppCompatActivity() {
     private lateinit var exploreCenterStore: ExploreCenterStoreImplementation
 
@@ -35,16 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val store = CXExploreCenterStoreImplementation()
         exploreCenterStore = store
-        exploreCenterStore.registerRepository(ExploreCenterRepositoryImplementation())
-        exploreCenterStore.registerReducers(listOf(
-            ExploreCenterGetExploresReducer(exploreCenterStore),
-            ExploreCenterLoadingReducer(exploreCenterStore),
-            ExploreCenterLoadedReducer(exploreCenterStore)
-        ))
-        exploreCenterStore.registerSaga(ExploreCenterGetExploresSaga(exploreCenterStore))
         setContent {
             MaterialTheme {
                 // in android compose scenario
