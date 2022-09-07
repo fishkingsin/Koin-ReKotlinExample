@@ -45,8 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val store = CXExploreCenterStoreImplementation()
-        exploreCenterStore = store
+        exploreCenterStore = CXExploreCenterStoreImplementation()
         setContent {
             MaterialTheme {
                 // in android compose scenario
