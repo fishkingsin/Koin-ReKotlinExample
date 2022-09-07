@@ -31,4 +31,5 @@ public interface ExploreCenterView: BaseView {
     abstract var exploreCenterStore: ExploreCenterStoreImplementation
     abstract fun updateExploresCategories(categories: List<ExploreCategory>)
     abstract fun updateExplores(exploreItem: List<ExploreItem>)
+    abstract fun updateSelectedCategory(category: ExploreCategory)
 }

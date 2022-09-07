@@ -8,7 +8,7 @@ import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-class ExploreCenterSelecteCategorySaga(override val store: ExploreCenterStoreImplementation?): ExploreCenterSagaImplementation(store) {
+class ExploreCenterSelectCategorySaga(override val store: ExploreCenterStoreImplementation?): ExploreCenterSagaImplementation(store) {
     private val _action: ExploreCenterBaseAction = ExploreCenterAction.SelectedCategory()
     override var action: ExploreCenterBaseAction
         get() = _action
@@ -23,7 +23,9 @@ class ExploreCenterSelecteCategorySaga(override val store: ExploreCenterStoreImp
         val executor = Executors.newSingleThreadScheduledExecutor()
         executor.schedule({
             runBlocking {
-                if (action is ExploreCenterAction.SelectedCategory)
+                if (action is ExploreCenterAction.SelectedCategory) {
+                    store?.put(action, action.category)
+                }
                 store?.put(ExploreCenterAction.State(State.loaded), action)
             }
             executor.shutdown()

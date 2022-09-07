@@ -33,6 +33,10 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
         /* Empty implementation */
     }
 
+    override fun updateSelectedCategory(category: ExploreCategory) {
+        selectedCategory = category
+    }
+
     override fun hideLoadingIndicator(type: String) {
         isLoading = false
     }

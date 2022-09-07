@@ -7,4 +7,5 @@ data class ExploreCenterState(
     var isLoading: Boolean = false
 ): BaseState() {
 
+    var selectedCategory: ExploreCategory? = null
 }
