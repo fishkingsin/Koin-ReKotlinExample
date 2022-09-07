@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.selectedCategory
 
 @Composable
 fun ExploreCenterCategoryItemVerticalListView(

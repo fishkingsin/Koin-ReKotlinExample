@@ -1,9 +1,8 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.saga
 
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterBaseAction
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.state
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.State
@@ -12,17 +11,17 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class ExploreCenterGetExploresSaga(override val store: ExploreCenterStoreImplementation?): ExploreCenterSagaImplementation(store) {
-    private val _action: ExploreCenterAction = getExplores()
-    override var action: ExploreCenterAction
+    private val _action: ExploreCenterBaseAction = GetExplores()
+    override var action: ExploreCenterBaseAction
         get() = _action
         set(value) {}
 
     override suspend fun onDispatch(
-        action: ExploreCenterAction,
+        action: ExploreCenterBaseAction,
         state: ExploreCenterState?,
         view: List<ExploreCenterView>?
     ) {
-        store?.put(state(State.loading), action)
+        store?.put(State(State.loading), action)
         val executor = Executors.newSingleThreadScheduledExecutor()
         executor.schedule({
             runBlocking {
@@ -43,10 +42,7 @@ class ExploreCenterGetExploresSaga(override val store: ExploreCenterStoreImpleme
                         }
                     }
                 }
-
-
-
-                store?.put(state(State.loaded), action)
+                store?.put(State(State.loaded), action)
             }
             executor.shutdown()
         }, 2, TimeUnit.SECONDS)

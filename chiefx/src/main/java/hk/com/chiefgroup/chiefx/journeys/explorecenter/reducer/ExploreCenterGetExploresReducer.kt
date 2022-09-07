@@ -1,22 +1,21 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer
 
 import android.util.Log
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterBaseAction
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploresReposonse
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStore
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
 
 class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImplementation?): ExploreCenterReducerImplementation(store) {
-    private val _action: ExploreCenterAction = getExplores()
-    override var action: ExploreCenterAction
+    private val _action: ExploreCenterBaseAction = ExploreCenterAction.GetExplores()
+    override var action: ExploreCenterBaseAction
         get() = _action
         set(value) {}
 
     override fun willUpdateView(
-        action: ExploreCenterAction,
+        action: ExploreCenterBaseAction,
         state: ExploreCenterState?,
         view: ExploreCenterView
     ): ExploreCenterState? {
@@ -26,7 +25,7 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
     }
 
     override fun onUpdate(
-        action: ExploreCenterAction,
+        action: ExploreCenterBaseAction,
         state: ExploreCenterState?,
         payload: Any?
     ): ExploreCenterState? {
@@ -40,7 +39,7 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
     }
 
     override fun updateView(
-        action: ExploreCenterAction,
+        action: ExploreCenterBaseAction,
         state: ExploreCenterState?,
         view: ExploreCenterView
     ) {

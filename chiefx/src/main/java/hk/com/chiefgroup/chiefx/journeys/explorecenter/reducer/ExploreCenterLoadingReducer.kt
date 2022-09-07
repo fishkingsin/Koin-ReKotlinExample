@@ -1,20 +1,20 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer
 
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterBaseAction
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.state
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.State
 
 class ExploreCenterLoadingReducer(override var store: ExploreCenterStoreImplementation?): ExploreCenterReducerImplementation(store) {
-    private val _action: ExploreCenterAction = state(State.loading)
-    override var action: ExploreCenterAction
+    private val _action: ExploreCenterBaseAction = State(State.loading)
+    override var action: ExploreCenterBaseAction
         get() = _action
         set(value) {}
 
     override fun willUpdateView(
-        action: ExploreCenterAction,
+        action: ExploreCenterBaseAction,
         state: ExploreCenterState?,
         view: ExploreCenterView
     ): ExploreCenterState? {
@@ -22,7 +22,7 @@ class ExploreCenterLoadingReducer(override var store: ExploreCenterStoreImplemen
     }
 
     override fun onUpdate(
-        action: ExploreCenterAction,
+        action: ExploreCenterBaseAction,
         state: ExploreCenterState?,
         payload: Any?
     ): ExploreCenterState? {
@@ -30,7 +30,7 @@ class ExploreCenterLoadingReducer(override var store: ExploreCenterStoreImplemen
     }
 
     override fun updateView(
-        action: ExploreCenterAction,
+        action: ExploreCenterBaseAction,
         state: ExploreCenterState?,
         view: ExploreCenterView
     ) {

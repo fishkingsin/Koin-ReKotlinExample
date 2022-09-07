@@ -31,15 +31,17 @@ fun ExploreCenterLanding(
             .onEach { onConfirm() }
             .collect()
     }
-    if (viewModel.isLoading) {
-        CircularProgressIndicator()
-    } else {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        if (viewModel.isLoading) {
+            CircularProgressIndicator()
+        } else {
+
             ExploreCenterCategoryVerticleListView(viewModel.categories, navController)
+
         }
     }
 //

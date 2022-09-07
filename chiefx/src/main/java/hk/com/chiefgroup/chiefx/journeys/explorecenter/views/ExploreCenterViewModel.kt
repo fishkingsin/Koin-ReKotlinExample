@@ -7,8 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.selectedCategory
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
 import kotlinx.coroutines.flow.Flow
@@ -47,11 +46,11 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
     }
 
     fun selectCategories(category: ExploreCategory) {
-        exploreCenterStore.dispatch(selectedCategory(category))
+        exploreCenterStore.dispatch(SelectedCategory(category))
     }
 
     fun getExplores() {
-        exploreCenterStore.dispatch(getExplores(0))
+        exploreCenterStore.dispatch(GetExplores(0))
     }
 
     override var key: String = "ExploreCenterViewModel"

@@ -2,6 +2,7 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.redux
 
 import android.util.Log
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.*
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterReducerImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.saga.ExploreCenterSagaImplementation
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.BaseStore
@@ -12,14 +13,14 @@ import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
 
 open class ExploreCenterStore<RepositoryType> : BaseStore<
-        ExploreCenterAction,
+        ExploreCenterBaseAction,
         ExploreCenterView,
         WeakReference<ExploreCenterView>,
         ExploreCenterState,
         ExploreCenterRouterImplementation,
         RepositoryType,
-        HashMap<ExploreCenterAction, ExploreCenterSagaImplementation>,
-        HashMap<ExploreCenterAction, ExploreCenterReducerImplementation>,
+        HashMap<ExploreCenterBaseAction, ExploreCenterSagaImplementation>,
+        HashMap<ExploreCenterBaseAction, ExploreCenterReducerImplementation>,
         ExploreCenterSagaImplementation,
         ExploreCenterReducerImplementation,
         >() {
@@ -51,12 +52,12 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     override var repository: RepositoryType?
         get() = _repository
         set(value) { _repository = value }
-    private var _sagas: HashMap<ExploreCenterAction, ExploreCenterSagaImplementation> = HashMap()
-    override var sagas: HashMap<ExploreCenterAction, ExploreCenterSagaImplementation>
+    private var _sagas: HashMap<ExploreCenterBaseAction, ExploreCenterSagaImplementation> = HashMap()
+    override var sagas: HashMap<ExploreCenterBaseAction, ExploreCenterSagaImplementation>
         get() = _sagas
         set(value) { _sagas = value }
-    private var _reducers: HashMap<ExploreCenterAction, ExploreCenterReducerImplementation> = HashMap()
-    override var reducers: HashMap<ExploreCenterAction, ExploreCenterReducerImplementation>
+    private var _reducers: HashMap<ExploreCenterBaseAction, ExploreCenterReducerImplementation> = HashMap()
+    override var reducers: HashMap<ExploreCenterBaseAction, ExploreCenterReducerImplementation>
         get() = _reducers
         set(value) { _reducers = value }
 
@@ -124,7 +125,7 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
         }
     }
 
-    open override fun updateViews(action: ExploreCenterAction) {
+    open override fun updateViews(action: ExploreCenterBaseAction) {
         Log.d(TAG,"updateViews ------before compact views $views")
         compact()
         views.forEach {
@@ -136,7 +137,7 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
         Log.d(TAG,"updateViews ------after compact views $views")
     }
 
-    open override fun dispatch(action: ExploreCenterAction): Unit = runBlocking {
+    open override fun dispatch(action: ExploreCenterBaseAction): Unit = runBlocking {
         compact()
         views.forEach {
             it.get()?.let { view ->
@@ -157,26 +158,26 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
 
     }
 
-    open override fun updateView(action: ExploreCenterAction, view: ExploreCenterView) {
+    open override fun updateView(action: ExploreCenterBaseAction, view: ExploreCenterView) {
         reducers[action]?.updateView(action, state.value, view)
     }
 
     open override fun viewDidLoad(view: ExploreCenterView) {
-        updateView(none(), view)
+        updateView(None(), view)
         reducers.keys.forEach { reducers[it]?.updateView(it, state.value, view) }
     }
 
     open override fun viewDidAppear(view: ExploreCenterView) {
-        updateView(state(State.viewDidAppear), view)
+        updateView(State(State.viewDidAppear), view)
     }
 
     open override fun viewWillAppear(view: ExploreCenterView) {
-        updateView(state(State.viewWillAppear), view)
+        updateView(State(State.viewWillAppear), view)
     }
 
     open override fun viewDeinit(view: ExploreCenterView) {
         Log.d(TAG,"-------------remove $view)-------------")
-        updateView(state(State.viewDeinit), view)
+        updateView(State(State.viewDeinit), view)
         compact()
         if (views.isEmpty()) {
             dispose()
@@ -198,7 +199,7 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     }
 
     // Worker saga will be fired on USER_FETCH_REQUESTED actions
-    public override fun put(action: ExploreCenterAction, payload: Any?): Unit= runBlocking {
+    public override fun put(action: ExploreCenterBaseAction, payload: Any?): Unit= runBlocking {
         val newState = reducers[action]?.onUpdate(action, state.value, payload)
         _state.emit(newState)
         updateViews(action)
