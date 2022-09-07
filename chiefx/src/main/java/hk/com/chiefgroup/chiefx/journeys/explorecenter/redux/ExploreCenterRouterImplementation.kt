@@ -6,18 +6,25 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 
 class ExploreCenterRouterImplementation: ExploreCenterRouter<ExploreCenterBaseAction>() {
-    val action: ExploreCenterBaseAction = ExploreCenterAction.NavigateToResults()
-    private val _navigateToResults = Channel<Boolean>(Channel.BUFFERED)
+
+    private val _navigateToCategoryDetails = Channel<Boolean>(Channel.BUFFERED)
 
     override fun route(action: ExploreCenterBaseAction): Unit = runBlocking {
         navigateTo(action = action)
     }
 
     private suspend fun navigateTo(action: ExploreCenterBaseAction) {
-        if (action == this.action) {
-            _navigateToResults.send(true)
+        when (action) {
+            is ExploreCenterAction.NavigateToCategoryDetails -> {
+                _navigateToCategoryDetails.send(true)
+            }
+            is ExploreCenterAction.SelectedCategory -> {
+
+            }
+            else -> {
+            }
         }
     }
 
-    val navigateToResults: Flow<Boolean> = _navigateToResults.receiveAsFlow()
+    val navigateToCategoryDetails: Flow<Boolean> = _navigateToCategoryDetails.receiveAsFlow()
 }

@@ -27,23 +27,19 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     companion object {
         private val TAG = "ExploreCenterStore"
     }
-    private var _router: ExploreCenterRouterImplementation? = null
+    protected var _router: ExploreCenterRouterImplementation? = null
     public override val router: ExploreCenterRouterImplementation?
         get() {
             return _router
         }
 
-    internal var _state: MutableStateFlow<ExploreCenterState?> = MutableStateFlow(null)
+    private var _state: MutableStateFlow<ExploreCenterState?> = MutableStateFlow(null)
     public override var state: StateFlow<ExploreCenterState?>
         get() = _state
         set(value) {
 
         }
 
-    private var _routers: HashMap<String, ExploreCenterRouterImplementation?> = HashMap()
-    override var routers: HashMap<String, ExploreCenterRouterImplementation?>
-        get() = _routers
-        set(value) {}
     private var _views: ArrayList<WeakReference<ExploreCenterView>> = ArrayList()
     override var views: ArrayList<WeakReference<ExploreCenterView>>
         get() = _views
@@ -162,9 +158,8 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
     }
 
     open override fun updateView(action: ExploreCenterBaseAction, view: ExploreCenterView) {
-        reducers.keys.first { it.key == action.key }?.let { selfAction ->
-            reducers[selfAction]?.updateView(action, state.value, view)
-        }
+        val reducer: ExploreCenterReducerImplementation? = reducers[action] ?: reducers[reducers.keys.first { it.key == action.key }]
+        reducer?.updateView(action, state.value, view)
     }
 
     open override fun viewDidLoad(view: ExploreCenterView) {

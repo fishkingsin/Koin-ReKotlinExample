@@ -4,11 +4,14 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterBaseAction
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRouterImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.State
 
-class ExploreCenterSelectCategoryReducer(override var store: ExploreCenterStoreImplementation?): ExploreCenterReducerImplementation(store) {
+class ExploreCenterSelectCategoryReducer(override var store: ExploreCenterStoreImplementation?,
+                                         override var router: ExploreCenterRouterImplementation? = null): ExploreCenterReducerImplementation(store) {
+
     private val _action: ExploreCenterBaseAction = ExploreCenterAction.SelectedCategory()
     override var action: ExploreCenterBaseAction
         get() = _action
@@ -42,6 +45,8 @@ class ExploreCenterSelectCategoryReducer(override var store: ExploreCenterStoreI
     ) {
         if (action is ExploreCenterAction.SelectedCategory) {
             action.category?.let { view.updateSelectedCategory(it) }
+            router?.route(ExploreCenterAction.NavigateToCategoryDetails(action.category))
         }
+
     }
 }

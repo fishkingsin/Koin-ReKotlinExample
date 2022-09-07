@@ -22,9 +22,10 @@ public abstract class  ExploreCenterSaga<StoreType, ActionType, StateType, ViewT
     abstract val store: StoreType?
 }
 
-public abstract class  ExploreCenterReducer<StoreType, ActionType, StateType, ViewType>:
+public abstract class  ExploreCenterReducer<StoreType, ActionType, StateType, ViewType, RouterRype>:
     BaseReducer<ActionType, StateType, ViewType>() {
     abstract val store: StoreType?
+    abstract val router: RouterRype?
 }
 
 public interface ExploreCenterView: BaseView {

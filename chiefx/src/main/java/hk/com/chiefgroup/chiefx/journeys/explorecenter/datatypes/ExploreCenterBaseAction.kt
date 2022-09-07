@@ -16,9 +16,15 @@ interface ExploreCenterAction {
     data class GetExplores(val number: Int = 0) : ExploreCenterBaseAction() {
         override var key: String = "GetExplores"
     }
-    data class NavigateToResults(val number: Int = 0) : ExploreCenterBaseAction()
+    data class NavigateToCategoryDetails(val category: ExploreCategory? = null ) : ExploreCenterBaseAction()
     {
         override var key: String = "NavigateToResults"
+
+        override fun hashCode(): Int {
+            return key.hashCode()
+        }
+        override fun equals(other: Any?) = this === other || other is SelectedCategory
+                && category == other.category
     }
     data class State(val state: hk.com.chiefgroup.chiefx.module.core.baseclasses.State) : ExploreCenterBaseAction()
     {

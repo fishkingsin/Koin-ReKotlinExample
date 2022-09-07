@@ -23,7 +23,7 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
     var isLoading by mutableStateOf(false)
     var selectedCategory by mutableStateOf(ExploreCategory())
 
-    val navigateToExploreCenterDetails: Flow<Boolean> = exploreCenterStore.router!!.navigateToResults
+    val navigateToExploreCenterDetails: Flow<Boolean> = exploreCenterStore.router!!.navigateToCategoryDetails
 
     override fun updateExploresCategories(categories: List<ExploreCategory>) {
         this.categories = categories
@@ -51,6 +51,7 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
 
     fun selectCategories(category: ExploreCategory) {
         exploreCenterStore.dispatch(SelectedCategory(category))
+        exploreCenterStore.router?.route(SelectedCategory(category))
     }
 
     fun getExplores() {
