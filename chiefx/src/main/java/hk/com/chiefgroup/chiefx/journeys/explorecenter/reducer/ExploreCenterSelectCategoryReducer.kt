@@ -9,7 +9,7 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.State
 
 class ExploreCenterSelectCategoryReducer(override var store: ExploreCenterStoreImplementation?): ExploreCenterReducerImplementation(store) {
-    private val _action: ExploreCenterBaseAction = ExploreCenterAction.State(State.loading)
+    private val _action: ExploreCenterBaseAction = ExploreCenterAction.SelectedCategory()
     override var action: ExploreCenterBaseAction
         get() = _action
         set(value) {}
@@ -19,7 +19,7 @@ class ExploreCenterSelectCategoryReducer(override var store: ExploreCenterStoreI
         state: ExploreCenterState?,
         view: ExploreCenterView
     ): ExploreCenterState? {
-        return state
+        return state ?: ExploreCenterState()
     }
 
     override fun onUpdate(

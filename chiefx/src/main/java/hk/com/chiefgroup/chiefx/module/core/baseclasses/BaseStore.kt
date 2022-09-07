@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.StateFlow
 import java.lang.ref.WeakReference
 
 abstract class BaseStore<
-        ActionType,
+        ActionType: BaseAction,
         ViewReferenceType,
         ViewType: WeakReference<ViewReferenceType>,
         StateType,

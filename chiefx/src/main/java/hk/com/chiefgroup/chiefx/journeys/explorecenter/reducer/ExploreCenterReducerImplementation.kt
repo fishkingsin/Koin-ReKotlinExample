@@ -11,4 +11,28 @@ open class ExploreCenterReducerImplementation(override var store: ExploreCenterS
     open var action: ExploreCenterBaseAction
         get() = TODO("Not yet implemented")
         set(value) {}
+
+    override fun updateView(
+        action: ExploreCenterBaseAction,
+        state: ExploreCenterState?,
+        view: ExploreCenterView
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun willUpdateView(
+        action: ExploreCenterBaseAction,
+        state: ExploreCenterState?,
+        view: ExploreCenterView
+    ): ExploreCenterState? {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUpdate(
+        action: ExploreCenterBaseAction,
+        state: ExploreCenterState?,
+        payload: Any?
+    ): ExploreCenterState? {
+        TODO("Not yet implemented")
+    }
 }

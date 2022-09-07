@@ -145,25 +145,29 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
                 _state.emit(newState)
             }
         }
+        sagas.keys.first { it.key == action.key }?.let { selfAction ->
 
-        sagas[action]?.onDispatch(
-            action,
-            state.value,
-            _views.mapNotNull{
-                return@mapNotNull it.get()
-            }
-        )
 
-        Log.d(TAG,"${sagas[action]}")
+            sagas[selfAction]?.onDispatch(
+                action,
+                state.value,
+                _views.mapNotNull { view ->
+                    return@mapNotNull view.get()
+                }
+            )
+
+            Log.d(TAG, "${sagas[action]}")
+        }
 
     }
 
     open override fun updateView(action: ExploreCenterBaseAction, view: ExploreCenterView) {
-        reducers[action]?.updateView(action, state.value, view)
+        reducers.keys.first { it.key == action.key }?.let { selfAction ->
+            reducers[selfAction]?.updateView(action, state.value, view)
+        }
     }
 
     open override fun viewDidLoad(view: ExploreCenterView) {
-        updateView(None(), view)
         reducers.keys.forEach { reducers[it]?.updateView(it, state.value, view) }
     }
 
@@ -200,9 +204,11 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
 
     // Worker saga will be fired on USER_FETCH_REQUESTED actions
     public override fun put(action: ExploreCenterBaseAction, payload: Any?): Unit= runBlocking {
-        val newState = reducers[action]?.onUpdate(action, state.value, payload)
-        _state.emit(newState)
-        updateViews(action)
-        Log.d(TAG,"put(ActionType: $action, Any: $payload)")
+        reducers.keys.first { it.key == action.key }?.let { selfAction ->
+            val newState = reducers[selfAction]?.onUpdate(action, state.value, payload)
+            _state.emit(newState)
+            updateViews(action)
+            Log.d(TAG, "put(ActionType: $action, Any: $payload)")
+        }
     }
 }

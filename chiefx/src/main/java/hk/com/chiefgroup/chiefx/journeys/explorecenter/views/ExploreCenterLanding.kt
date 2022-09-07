@@ -26,24 +26,7 @@ fun ExploreCenterLanding(
 
     // We only want the event stream to be attached once
     // even if there are multiple re-compositions
-    LaunchedEffect("key") { // probably is a better way to set the key than hardcoding key...
-        viewModel.navigateToExploreCenterDetails
-            .onEach { onConfirm() }
-            .collect()
-    }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        if (viewModel.isLoading) {
-            CircularProgressIndicator()
-        } else {
 
-            ExploreCenterCategoryVerticleListView(viewModel.categories, navController)
-
-        }
-    }
 //
 //    Column(
 //        modifier = Modifier.fillMaxSize(),
