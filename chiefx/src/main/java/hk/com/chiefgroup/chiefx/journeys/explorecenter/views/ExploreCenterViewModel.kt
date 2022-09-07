@@ -1,15 +1,17 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.*
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.selectedCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterView
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.runBlocking
 
 
 class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStoreImplementation): ViewModel(), ExploreCenterView {
@@ -18,19 +20,18 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
         exploreCenterStore.register(this)
     }
 
-    var records by mutableStateOf(listOf<ExploreCategory>())
+    var categories by mutableStateOf(listOf<ExploreCategory>())
     var isLoading by mutableStateOf(false)
+    var selectedCategory by mutableStateOf(ExploreCategory())
 
     val navigateToExploreCenterDetails: Flow<Boolean> = exploreCenterStore.router!!.navigateToResults
 
-    override fun updateExplores(exploreState: ExploreCenterState) {
-        exploreState.exploresReposonse?.Object?.Records?.let {
-            records = it
-        }
+    override fun updateExploresCategories(categories: List<ExploreCategory>) {
+        this.categories = categories
     }
 
-    override fun updateName(name: String) {
-        TODO("Not yet implemented")
+    override fun updateExplores(exploreItem: List<ExploreItem>) {
+        /* Empty implementation */
     }
 
     override fun hideLoadingIndicator(type: String) {
@@ -45,8 +46,12 @@ class ExploreCenterViewModel(override var exploreCenterStore: ExploreCenterStore
         TODO("Not yet implemented")
     }
 
+    fun selectCategories(category: ExploreCategory) {
+        exploreCenterStore.dispatch(selectedCategory(category))
+    }
+
     fun getExplores() {
-        exploreCenterStore.dispatch(hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores())
+        exploreCenterStore.dispatch(getExplores(0))
     }
 
     override var key: String = "ExploreCenterViewModel"

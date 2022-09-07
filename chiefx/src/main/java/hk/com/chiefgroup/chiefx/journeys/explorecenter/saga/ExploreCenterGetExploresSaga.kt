@@ -27,7 +27,25 @@ class ExploreCenterGetExploresSaga(override val store: ExploreCenterStoreImpleme
         executor.schedule({
             runBlocking {
                 val result = store?.repository?.getExplores()
-                store?.put(action, result)
+
+                when {
+                    result?.isSuccess == true -> {
+                        result.getOrNull()?.let {
+                            store?.put(action, it)
+                        }
+                    }
+                    result?.isFailure == true -> {
+                        result.exceptionOrNull()?.let { error ->
+
+                            error.message?.let { message ->
+                                store?.put(error(message), error)
+                            }
+                        }
+                    }
+                }
+
+
+
                 store?.put(state(State.loaded), action)
             }
             executor.shutdown()

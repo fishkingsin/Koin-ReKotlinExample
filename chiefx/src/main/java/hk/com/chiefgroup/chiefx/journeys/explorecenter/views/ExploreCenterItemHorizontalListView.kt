@@ -11,10 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 
 @Composable
-fun ExploreCenterItemHorizontalListView(items: List<ExploreItem>) {
+fun ExploreCenterItemHorizontalListView(items: List<ExploreItem>, navController: NavController) {
     LazyRow {
         items(items) { item ->
             Card {
@@ -30,5 +32,6 @@ fun ExploreCenterItemHorizontalListView(items: List<ExploreItem>) {
 @Preview
 @Composable
 fun PreviewExploreCenterItemHorizontalListView() {
-    ExploreCenterItemHorizontalListView(emptyList())
+    val navController = rememberNavController()
+    ExploreCenterItemHorizontalListView(emptyList(), navController)
 }

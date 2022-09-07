@@ -5,20 +5,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.selectedCategory
 
 @Composable
-fun ExploreCenterDetail(
-    records: List<ExploreItem>
+fun ExploreCenterCategoryItemVerticalListView(
+    category: ExploreCategory
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -26,7 +25,7 @@ fun ExploreCenterDetail(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         LazyColumn {
-            items(records) { item ->
+            items(category.Records) { item ->
                 Text(text = item.Title ?: "")
             }
         
@@ -37,8 +36,8 @@ fun ExploreCenterDetail(
 
 @Preview
 @Composable
-fun TestExploreCenterDetailPreview() {
+fun TestExploreCenterCategoryItemVerticalListViewPreview() {
     MaterialTheme() {
-        ExploreCenterDetail(records = listOf(ExploreItem(Title = "Title")))
+        ExploreCenterCategoryItemVerticalListView(ExploreCategory(Records = arrayListOf(ExploreItem(Title = "Title"))))
     }
 }

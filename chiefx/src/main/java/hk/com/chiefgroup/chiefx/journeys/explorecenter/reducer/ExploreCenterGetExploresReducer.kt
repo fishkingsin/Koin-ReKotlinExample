@@ -3,6 +3,7 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer
 import android.util.Log
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploresReposonse
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.getExplores
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStore
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
@@ -30,6 +31,10 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
         payload: Any?
     ): ExploreCenterState? {
         var newState: ExploreCenterState = state ?: ExploreCenterState()
+        val response = payload as? ExploresReposonse
+        response?.let {
+            newState.exploresReposonse = it
+        }
         newState.isLoading = false
         return newState
     }
@@ -42,8 +47,8 @@ class ExploreCenterGetExploresReducer(override var store: ExploreCenterStoreImpl
         Log.d("GetExploresReducer","updateViews $action $state $view")
         if (action == this._action && state != null) {
             store?.router?.route(action)
-            state.exploresReposonse?.REF?.let {
-                view.updateName(it)
+            state.exploresReposonse?.Object?.Records?.let {
+                view.updateExploresCategories(it)
             }
 
         }
