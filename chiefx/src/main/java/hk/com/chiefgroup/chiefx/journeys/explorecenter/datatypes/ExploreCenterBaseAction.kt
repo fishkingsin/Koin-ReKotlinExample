@@ -30,7 +30,7 @@ interface ExploreCenterAction {
     {
         override var key: String = "State"
     }
-    data class Error(val error: Error) : ExploreCenterBaseAction() {
+    data class Error(val error: Throwable) : ExploreCenterBaseAction() {
         override var key: String = "Error"
     }
 

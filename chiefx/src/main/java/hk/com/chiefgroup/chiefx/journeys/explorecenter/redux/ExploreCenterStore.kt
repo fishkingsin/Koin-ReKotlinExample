@@ -141,7 +141,7 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
                 _state.emit(newState)
             }
         }
-        sagas.keys.first { it.key == action.key }?.let { selfAction ->
+        sagas.keys.first { it.key == action.key }.let { selfAction ->
 
 
             sagas[selfAction]?.onDispatch(
@@ -199,7 +199,7 @@ open class ExploreCenterStore<RepositoryType> : BaseStore<
 
     // Worker saga will be fired on USER_FETCH_REQUESTED actions
     public override fun put(action: ExploreCenterBaseAction, payload: Any?): Unit= runBlocking {
-        reducers.keys.first { it.key == action.key }?.let { selfAction ->
+        reducers.keys.first { it.key == action.key }.let { selfAction ->
             val newState = reducers[selfAction]?.onUpdate(action, state.value, payload)
             _state.emit(newState)
             updateViews(action)
