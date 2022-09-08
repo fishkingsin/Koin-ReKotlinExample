@@ -1,65 +1,76 @@
 package hk.com.chiefgroup.chiefxsampleapp
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterAction
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterGetExploresReducer
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterLoadedReducer
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterLoadingReducer
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterSelectCategoryReducer
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRouterImplementation
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.saga.ExploreCenterGetExploresSaga
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.saga.ExploreCenterSelectCategorySaga
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterReducer
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableViewModel
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterViewModelFactory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenter
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterViewModel
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterViewModelFactory
+import org.rekotlin.Store
+import org.rekotlin.Subscriber
+import org.rekotlin.router.*
+import org.rekotlin.store
+import org.rekotlin.thunkMiddleware
 
-class CXExploreCenterStoreImplementation : ExploreCenterStoreImplementation() {
-    // customization
-// Default implementation
-    init {
-        _router = ExploreCenterRouterImplementation()
-        registerRepository(ExploreCenterRepositoryImplementation())
-        registerReducers(
-            listOf(
-                ExploreCenterGetExploresReducer(this),
-                ExploreCenterLoadingReducer(this),
-                ExploreCenterLoadedReducer(this),
-                ExploreCenterSelectCategoryReducer(this, _router),
-            )
-        )
-        registerSagas(
-            listOf(
-                ExploreCenterGetExploresSaga(this),
-                ExploreCenterSelectCategorySaga(this)
-            )
-        )
-    }
-}
 
-//
-class MainActivity : AppCompatActivity() {
-    private lateinit var exploreCenterStore: ExploreCenterStoreImplementation
+class MainActivity : AppCompatActivity(), Subscriber<ExploreCenterState>, Routable {
 
-    private val model: ExploreCenterViewModel by viewModels {
-        ExploreCenterViewModelFactory(exploreCenterStore)
+    private lateinit var store: Store<ExploreCenterState>
+    private val model: ExploreCenterStateObservableViewModel by viewModels {
+        ExploreCenterViewModelFactory(store)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exploreCenterStore = CXExploreCenterStoreImplementation()
+        store = store(
+            reducer = ::ExploreCenterReducer,
+            state = ExploreCenterState(),
+            middleware = arrayOf(thunkMiddleware())
+        )
+// crash here
+        /*val router = router(rootRoutable = this, Handler(Looper.getMainLooper())::post)
+        // subscribe it to navigationState changes
+        store.subscribe(router, selector = {
+            select { navigationState ?: NavigationState() }
+        })
+*/
         setContent {
             MaterialTheme {
                 // in android compose scenario
                 ExploreCenter(model)
             }
         }
-        exploreCenterStore.dispatch(ExploreCenterAction.GetExplores(0))
+
+        store.subscribe(this)
+
+//        store.dispatch(SetRouteAction(Route("home", "user")))
+    }
+    override fun newState(state: ExploreCenterState) {
+        Log.d("Main", "newState $state")
+
+    }
+
+    override fun changeRouteSegment(
+        from: RouteSegment,
+        to: RouteSegment,
+        animated: Boolean
+    ): Routable {
+        TODO("Not yet implemented")
+    }
+
+    override fun popRouteSegment(routeSegment: RouteSegment, animated: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun pushRouteSegment(routeSegment: RouteSegment, animated: Boolean): Routable {
+        TODO("Not yet implemented")
     }
 }
 

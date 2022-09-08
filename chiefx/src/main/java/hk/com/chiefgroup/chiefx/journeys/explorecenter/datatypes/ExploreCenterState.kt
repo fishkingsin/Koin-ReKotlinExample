@@ -1,11 +1,13 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes
 
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.BaseState
+import org.rekotlin.router.NavigationState
 
 data class ExploreCenterState(
-    var exploresReposonse: ExploresReposonse? = null,
-    var isLoading: Boolean = false
-): BaseState() {
-
-    var selectedCategory: ExploreCategory? = null
-}
+    val navigationState: NavigationState? = null,
+    val exploresResponse: ExploresReposonse? = null,
+    val isLoading: Boolean? = null,
+    val error: Throwable? = null,
+    val categories: ArrayList<ExploreCategory>? = null,
+    val selectedCategory: ExploreCategory? = null,
+    val count: Int = 0,
+)

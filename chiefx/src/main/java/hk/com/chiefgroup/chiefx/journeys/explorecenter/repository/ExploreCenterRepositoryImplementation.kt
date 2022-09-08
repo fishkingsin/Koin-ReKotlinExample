@@ -3,6 +3,12 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.redux
 import com.google.gson.Gson
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploresReposonse
 
+public abstract class ExploreCenterRepository {
+    abstract suspend fun getExplores(): Result<ExploresReposonse>
+    abstract fun getExplores(callback: (Result<ExploresReposonse>) -> Unit)
+}
+
+
 class ExploreCenterRepositoryImplementation: ExploreCenterRepository() {
     override suspend fun getExplores(): Result<ExploresReposonse> {
         val myJson = exploreCenterJSONString().trimIndent()
@@ -14,6 +20,17 @@ class ExploreCenterRepositoryImplementation: ExploreCenterRepository() {
             Result.failure(exception)
         }
 
+    }
+
+    override fun getExplores(callback: (Result<ExploresReposonse>) -> Unit) {
+        val myJson = exploreCenterJSONString().trimIndent()
+        val gson = Gson()
+        try {
+            val response = gson.fromJson(myJson, ExploresReposonse::class.java)
+            callback(Result.success(response))
+        } catch (exception: Exception) {
+            callback(Result.failure(exception))
+        }
     }
 
 }

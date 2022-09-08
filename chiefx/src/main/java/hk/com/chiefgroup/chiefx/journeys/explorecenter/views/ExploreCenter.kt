@@ -11,26 +11,31 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
+
 @Composable
 fun ExploreCenter(
-    viewModel: ExploreCenterViewModel
+    viewModel: ExploreCenterStateObservableViewModel
 ) {
     val navController = rememberNavController()
     NavHost(navController, startDestination = "explore center landing") {
         composable("explore center landing") {
             LaunchedEffect("key") { // probably is a better way to set the key than hardcoding key...
+                // temp solution on routing
                 viewModel.navigateToExploreCenterDetails
                     .onEach { navController.navigate("details") }
                     .collect()
+
             }
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+
                 if (viewModel.isLoading) {
                     CircularProgressIndicator()
                 } else {
