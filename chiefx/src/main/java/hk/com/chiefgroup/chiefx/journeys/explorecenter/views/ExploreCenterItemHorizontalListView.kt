@@ -17,9 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import androidx.compose.ui.text.*
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableViewModel
 
 @Composable
-fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: ExploreCenterViewModel) {
+fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: ExploreCenterStateObservableViewModel) {
     LazyRow (
         modifier = Modifier
             .fillMaxSize()

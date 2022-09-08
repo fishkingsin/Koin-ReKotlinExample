@@ -97,4 +97,10 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    // ReKotlin
+    implementation 'io.github.rakutentech.rekotlin:rekotlin:2.1.0'
+    // ReKotlin-Router
+    implementation 'io.github.rakutentech.rekotlin:rekotlin-router:1.0.0'
+
+
 }
