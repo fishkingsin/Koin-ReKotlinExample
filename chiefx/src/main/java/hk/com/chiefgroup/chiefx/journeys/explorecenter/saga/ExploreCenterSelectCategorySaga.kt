@@ -25,8 +25,9 @@ class ExploreCenterSelectCategorySaga(override val store: ExploreCenterStoreImpl
             runBlocking {
                 if (action is ExploreCenterAction.SelectedCategory) {
                     store?.put(action, action.category)
+                    store?.put(ExploreCenterAction.State(State.loaded), action)
                 }
-                store?.put(ExploreCenterAction.State(State.loaded), action)
+
             }
             executor.shutdown()
         }, 2, TimeUnit.SECONDS)

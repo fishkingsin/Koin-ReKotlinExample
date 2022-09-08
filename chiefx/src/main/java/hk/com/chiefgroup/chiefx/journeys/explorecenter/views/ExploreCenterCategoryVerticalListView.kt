@@ -12,11 +12,7 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 
 @Composable
 fun ExploreCenterCategoryVerticalListView(records: List<ExploreCategory>, viewModel: ExploreCenterViewModel) {
-    LazyColumn (
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-
+    LazyColumn(modifier = Modifier.fillMaxHeight()) {
         items(records) { item ->  
             ExploreCenterItemHorizontalListView(item, viewModel)
         }

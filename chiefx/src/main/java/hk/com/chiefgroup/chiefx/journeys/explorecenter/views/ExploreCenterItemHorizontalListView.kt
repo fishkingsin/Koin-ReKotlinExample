@@ -1,8 +1,9 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 
-import android.widget.ImageView
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -13,11 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.unit.sp
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterStoreImplementation
+import androidx.compose.ui.text.*
 
 @Composable
 fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: ExploreCenterViewModel) {
@@ -27,7 +26,8 @@ fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: Ex
             .clickable { viewModel.selectCategories(category) }
     ){
         items(category.Records) { item ->
-            Card {
+            Card(modifier = Modifier
+                .fillMaxSize()) {
                 Column(Modifier.padding(10.dp)) {
                     Text(item.Title ?: "", fontWeight = FontWeight.W700)
                     Text(item.Subtitle ?: "")
@@ -37,10 +37,37 @@ fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: Ex
     }
 }
 
-@Preview
+@Preview(name = "PreviewExploreCenterItemHorizontalListView")
 @Composable
 fun PreviewExploreCenterItemHorizontalListView() {
-    ExploreCenterItemHorizontalListView(ExploreCategory(), ExploreCenterViewModel(
-        ExploreCenterStoreImplementation()
-    ))
+    val list = listOf(
+        "A", "B", "C", "D"
+    ) + ((0..100).map { it.toString() })
+    LazyRow(modifier = Modifier.fillMaxHeight()) {
+        items(items = list, itemContent = { item ->
+            Log.d("COMPOSE", "This get rendered $item")
+            when (item) {
+                "A" -> {
+                    Text(text = item, style = TextStyle(fontSize = 80.sp))
+                }
+                "B" -> {
+                    Button(onClick = {}) {
+                        Text(text = item, style = TextStyle(fontSize = 80.sp))
+                    }
+                }
+                "C" -> {
+                    //Do Nothing
+                }
+                "D" -> {
+                    Text(text = item)
+                }
+                else -> {
+                    Text(text = item, style = TextStyle(fontSize = 80.sp))
+                }
+            }
+        })
+    }
+//    ExploreCenterItemHorizontalListView(ExploreCategory(), ExploreCenterViewModel(
+//        ExploreCenterStoreImplementation()
+//    ))
 }
