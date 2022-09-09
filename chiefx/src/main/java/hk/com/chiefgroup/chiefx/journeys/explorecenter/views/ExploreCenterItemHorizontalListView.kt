@@ -17,14 +17,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import androidx.compose.ui.text.*
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableViewModel
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterSelectedCategory
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableStateViewModel
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateViewModel
 
 @Composable
-fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: ExploreCenterStateObservableViewModel) {
+fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: ObservableStateViewModel<ExploreCenterState>) {
     LazyRow (
         modifier = Modifier
             .fillMaxSize()
-            .clickable { viewModel.selectCategories(category) }
+            .clickable { viewModel.dispatch(ExploreCenterSelectedCategory(category)) }
     ){
         items(category.Records) { item ->
             Card(modifier = Modifier
@@ -38,7 +41,7 @@ fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: Ex
     }
 }
 
-@Preview(name = "PreviewExploreCenterItemHorizontalListView")
+@Preview(name = "PreviewExploreCenterItemHorizontalListView", showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewExploreCenterItemHorizontalListView() {
     val list = listOf(

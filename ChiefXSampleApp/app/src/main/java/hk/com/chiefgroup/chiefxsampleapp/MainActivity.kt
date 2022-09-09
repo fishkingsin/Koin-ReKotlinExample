@@ -1,8 +1,6 @@
 package hk.com.chiefgroup.chiefxsampleapp
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -10,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterReducer
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableViewModel
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableStateViewModel
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterViewModelFactory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenter
 import org.rekotlin.Store
@@ -23,7 +21,7 @@ import org.rekotlin.thunkMiddleware
 class MainActivity : AppCompatActivity(), Subscriber<ExploreCenterState>, Routable {
 
     private lateinit var store: Store<ExploreCenterState>
-    private val model: ExploreCenterStateObservableViewModel by viewModels {
+    private val model: ExploreCenterStateObservableStateViewModel by viewModels {
         ExploreCenterViewModelFactory(store)
     }
 

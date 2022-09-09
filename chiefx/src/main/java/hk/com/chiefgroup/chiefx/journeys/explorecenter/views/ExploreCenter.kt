@@ -11,23 +11,26 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableViewModel
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableStateViewModel
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
 
 @Composable
 fun ExploreCenter(
-    viewModel: ExploreCenterStateObservableViewModel
+    viewModel: ObservableStateViewModel<ExploreCenterState>
 ) {
     val navController = rememberNavController()
     NavHost(navController, startDestination = "explore center landing") {
         composable("explore center landing") {
             LaunchedEffect("key") { // probably is a better way to set the key than hardcoding key...
                 // temp solution on routing
-                viewModel.navigateToExploreCenterDetails
-                    .onEach { navController.navigate("details") }
-                    .collect()
+//                viewModel.navigateToExploreCenterDetails
+//                    .onEach { navController.navigate("details") }
+//                    .collect()
 
             }
             Column(
@@ -36,18 +39,18 @@ fun ExploreCenter(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                if (viewModel.isLoading) {
+                if (viewModel.current.isLoading == true) {
                     CircularProgressIndicator()
                 } else {
 
-                    ExploreCenterCategoryVerticalListView(viewModel.categories, viewModel)
+                    ExploreCenterCategoryVerticalListView(viewModel.current.categories ?: emptyList(), viewModel)
 
                 }
             }
         }
         composable("details") {
             ExploreCenterCategoryItemVerticalListView(
-                viewModel.selectedCategory
+                viewModel.current.selectedCategory ?: ExploreCategory()
             )
         }
     }

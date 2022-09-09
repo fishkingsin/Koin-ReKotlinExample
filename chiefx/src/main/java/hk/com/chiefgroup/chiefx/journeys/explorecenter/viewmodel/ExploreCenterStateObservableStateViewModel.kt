@@ -8,12 +8,10 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.GetExploresThunk
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.StoreObservableViewModel
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateViewModel
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ViewModelFactory
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.runBlocking
 import org.rekotlin.Store
@@ -24,7 +22,7 @@ class ExploreCenterViewModelFactory(store: Store<ExploreCenterState>) :
     private val _store: Store<ExploreCenterState>
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return ExploreCenterStateObservableViewModel(_store) as T
+        return ExploreCenterStateObservableStateViewModel(_store) as T
     }
 
 
@@ -33,8 +31,8 @@ class ExploreCenterViewModelFactory(store: Store<ExploreCenterState>) :
     }
 }
 
-class ExploreCenterStateObservableViewModel(store: Store<ExploreCenterState>) :
-    StoreObservableViewModel<ExploreCenterState>(
+class ExploreCenterStateObservableStateViewModel(store: Store<ExploreCenterState>) :
+    ObservableStateViewModel<ExploreCenterState>(
         store
     ), ExploreCenterView {
 
