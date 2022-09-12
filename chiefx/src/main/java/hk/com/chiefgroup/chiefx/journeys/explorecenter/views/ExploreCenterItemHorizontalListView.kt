@@ -19,15 +19,14 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import androidx.compose.ui.text.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterSelectedCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableStateViewModel
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateViewModel
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 
 @Composable
-fun ExploreCenterItemHorizontalListView(category: ExploreCategory, viewModel: ObservableStateViewModel<ExploreCenterState>) {
+fun ExploreCenterItemHorizontalListView(category: ExploreCategory, state: ObservableState<ExploreCenterState>) {
     LazyRow (
         modifier = Modifier
             .fillMaxSize()
-            .clickable { viewModel.dispatch(ExploreCenterSelectedCategory(category)) }
+            .clickable { state.dispatch(ExploreCenterSelectedCategory(category)) }
     ){
         items(category.Records) { item ->
             Card(modifier = Modifier

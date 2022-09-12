@@ -13,16 +13,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.viewmodel.ExploreCenterStateObservableStateViewModel
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 
 
 @Composable
 fun ExploreCenter(
-    viewModel: ObservableStateViewModel<ExploreCenterState>
+    state: ObservableState<ExploreCenterState>
 ) {
+
     val navController = rememberNavController()
     NavHost(navController, startDestination = "explore center landing") {
         composable("explore center landing") {
@@ -39,18 +37,18 @@ fun ExploreCenter(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                if (viewModel.current.isLoading == true) {
+                if (state.current.isLoading == true) {
                     CircularProgressIndicator()
                 } else {
 
-                    ExploreCenterCategoryVerticalListView(viewModel.current.categories ?: emptyList(), viewModel)
+                    ExploreCenterCategoryVerticalListView(state.current.categories ?: emptyList(), state)
 
                 }
             }
         }
         composable("details") {
             ExploreCenterCategoryItemVerticalListView(
-                viewModel.current.selectedCategory ?: ExploreCategory()
+                state.current.selectedCategory ?: ExploreCategory()
             )
         }
     }
