@@ -102,5 +102,7 @@ dependencies {
     // ReKotlin-Router
     implementation 'io.github.rakutentech.rekotlin:rekotlin-router:1.0.0'
 
+    // coil async image
+    implementation("io.coil-kt:coil-compose:2.2.1")
 
 }

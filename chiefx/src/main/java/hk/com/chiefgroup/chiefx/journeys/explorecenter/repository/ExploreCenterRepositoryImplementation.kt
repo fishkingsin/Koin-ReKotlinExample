@@ -50,10 +50,10 @@ internal fun exploreCenterJSONString(): String {
         				"RecordCount": 4,
         				"Records": [
         					{
-        						"SeqNo": 11,
+        						"SeqNo":  741,
         						"Title": "1",
         						"Subtitle": "11",
-        						"BannerUrl": "https://www.chiefgroup.com.hk/hk/financial/GetRecordFile?fileNo=140",
+        						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "1",
         						"ShareContent": "1",
         						"StartTime": "202208230000",
@@ -64,10 +64,10 @@ internal fun exploreCenterJSONString(): String {
         						"Tags": "asd"
         					},
         					{
-        						"SeqNo": 10,
+        						"SeqNo":  143,
         						"Title": "1",
         						"Subtitle": "1",
-        						"BannerUrl": "https://www.chiefgroup.com.hk/hk/financial/GetRecordFile?fileNo=9",
+        						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "1",
         						"ShareContent": "1",
         						"StartTime": "202208230000",
@@ -78,10 +78,10 @@ internal fun exploreCenterJSONString(): String {
         						"Tags": "1"
         					},
         					{
-        						"SeqNo": 7,
+        						"SeqNo": 693,
         						"Title": "test7en",
         						"Subtitle": "testen",
-        						"BannerUrl": "",
+        						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "",
         						"ShareContent": "",
         						"StartTime": "202207010000",
@@ -92,10 +92,10 @@ internal fun exploreCenterJSONString(): String {
         						"Tags": ""
         					},
         					{
-        						"SeqNo": 3,
+        						"SeqNo": 324,
         						"Title": "test3En",
         						"Subtitle": "testen",
-        						"BannerUrl": "https://www.chiefgroup.com.hk/hk/financial/GetRecordFile?fileNo=3",
+        						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",
         						"ShareContent": "en",
         						"StartTime": "202207010000",
@@ -115,10 +115,10 @@ internal fun exploreCenterJSONString(): String {
         				"RecordCount": 2,
         				"Records": [
         					{
-        						"SeqNo": 4,
+        						"SeqNo": 686,
         						"Title": "test4En",
         						"Subtitle": "testen",
-        						"BannerUrl": "",
+        						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "En",
         						"ShareContent": "En",
         						"StartTime": "202208180000",
@@ -129,10 +129,10 @@ internal fun exploreCenterJSONString(): String {
         						"Tags": ""
         					},
         					{
-        						"SeqNo": 8,
+        						"SeqNo": 5,
         						"Title": "test8eng",
         						"Subtitle": "testen",
-        						"BannerUrl": "",
+        						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "eng",
         						"ShareContent": "eng",
         						"StartTime": "000101010000",
@@ -152,10 +152,10 @@ internal fun exploreCenterJSONString(): String {
         				"RecordCount": 2,
         				"Records": [
         					{
-        						"SeqNo": 5,
+        						"SeqNo": 378,
         						"Title": "test5en",
         						"Subtitle": "testen",
-        						"BannerUrl": "",
+        						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",
         						"ShareContent": "en",
         						"StartTime": "202207140000",
@@ -166,10 +166,10 @@ internal fun exploreCenterJSONString(): String {
         						"Tags": ""
         					},
         					{
-        						"SeqNo": 6,
+        						"SeqNo": 434,
         						"Title": "test6en",
         						"Subtitle": "testen",
-        						"BannerUrl": "",
+        						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",
         						"ShareContent": "en",
         						"StartTime": "202208100000",

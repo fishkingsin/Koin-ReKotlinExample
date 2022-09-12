@@ -20,7 +20,6 @@ import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 fun ExploreCenter(
     state: ObservableState<ExploreCenterState>
 ) {
-
     val navController = rememberNavController()
     NavHost(navController, startDestination = "explore center landing") {
         composable("explore center landing") {

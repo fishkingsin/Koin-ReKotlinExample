@@ -8,39 +8,79 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.Card
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
-import androidx.compose.ui.text.*
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterSelectedCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.ExploreCenterSelectedCategoryThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
+import org.rekotlin.router.Route
+import org.rekotlin.router.SetRouteAction
 
 @Composable
-fun ExploreCenterItemHorizontalListView(category: ExploreCategory, state: ObservableState<ExploreCenterState>) {
-    LazyRow (
+fun ExploreCenterItemHorizontalListView(
+    category: ExploreCategory,
+    state: ObservableState<ExploreCenterState>
+) {
+    LazyRow(
         modifier = Modifier
             .fillMaxSize()
-            .clickable { state.dispatch(ExploreCenterSelectedCategory(category)) }
-    ){
+            .clickable {
+                state.dispatch(
+                    ExploreCenterSelectedCategoryThunk(
+                        category,
+                        state.current.navigationState?.route ?: Route("root")
+                    )
+                )
+            }
+    ) {
         items(category.Records) { item ->
-            Card(modifier = Modifier
-                .fillMaxSize()) {
-                Column(Modifier.padding(10.dp)) {
-                    Text(item.Title ?: "", fontWeight = FontWeight.W700)
-                    Text(item.Subtitle ?: "")
+            Card(
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .fillMaxHeight()
+                    .padding(horizontal = 4.dp)
+                    .clickable { state.dispatch(SetRouteAction(Route("root"))) }) {
+                Column() {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(item.BannerUrl ?: "https://picsum.photos/600")
+                            .diskCacheKey(item.SeqNo.toString())
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = null
+                    )
+                    Column() {
+
+
+                        Text(item.Title ?: "", fontWeight = FontWeight.W700)
+                        Text(item.Subtitle ?: "")
+                    }
                 }
+
             }
         }
     }
 }
 
-@Preview(name = "PreviewExploreCenterItemHorizontalListView", showSystemUi = true, showBackground = true)
+@Preview(
+    name = "PreviewExploreCenterItemHorizontalListView",
+    showSystemUi = true,
+    showBackground = true
+)
 @Composable
 fun PreviewExploreCenterItemHorizontalListView() {
     val list = listOf(
