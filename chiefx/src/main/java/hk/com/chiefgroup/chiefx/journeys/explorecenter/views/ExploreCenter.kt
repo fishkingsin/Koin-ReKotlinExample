@@ -47,7 +47,8 @@ fun ExploreCenter(
         }
         composable("details") {
             ExploreCenterCategoryItemVerticalListView(
-                state.current.selectedCategory ?: ExploreCategory()
+                state.current.selectedCategory ?: ExploreCategory(),
+                state
             )
         }
     }
