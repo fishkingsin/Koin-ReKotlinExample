@@ -1,9 +1,6 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk
 
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterRequestExploresEnded
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterRequestExploresFailed
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterRequestExploresStarted
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterRequestExploresSuccess
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepository
 import kotlinx.coroutines.runBlocking
@@ -30,5 +27,11 @@ public class GetExploresThunk(private val repository: ExploreCenterRepository): 
             }
             dispatch(ExploreCenterRequestExploresEnded())
         }
+    }
+}
+
+class dismissThunk: Thunk<ExploreCenterState> {
+    override fun invoke(dispatch: DispatchFunction, getState: () -> ExploreCenterState?) {
+        dispatch(ExploreCenterRequestExploresExitWithResult())
     }
 }

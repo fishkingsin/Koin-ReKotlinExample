@@ -42,6 +42,7 @@ open class ObservableState<T: BaseRoutableState>(var store: Store<T>) : ViewMode
         Log.d(TAG, "newState segment ${state.navigationState?.route?.segments}")
         runBlocking {
             state.navigationState?.route?.segments?.let { segments ->
+                Log.d(TAG, "_navigateTo.send(${segments.map { it.id }})")
                 _navigateTo.send(segments.map { it.id })
             }
         }

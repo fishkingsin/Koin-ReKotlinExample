@@ -6,6 +6,7 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterSt
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploresReposonse
 import org.rekotlin.Action
 import org.rekotlin.router.NavigationState
+import org.rekotlin.router.Route
 import org.rekotlin.router.navigationReducer
 
 fun exploreCenterReducer(action: Action, oldState: ExploreCenterState?): ExploreCenterState {
@@ -18,10 +19,20 @@ fun exploreCenterReducer(action: Action, oldState: ExploreCenterState?): Explore
         categories = exploreCenterRequestCategoriesReducer(action, state.categories),
         isLoading = exploreCenterRequestExploresStarted(action, state.isLoading),
         error = exploreCenterRequestExploresFailedReducer(action, state.error),
-        navigationState = navigationReducer(action, state.navigationState)
+        navigationState = exploreCenterNavigationReducerReducer(action, state.navigationState)
     )
 }
-
+fun exploreCenterNavigationReducerReducer(action: Action, oldState: NavigationState?): NavigationState? {
+    val state = oldState ?: NavigationState(Route("Root"))
+    return when (action) {
+        is ExploreCenterRequestExploresExitWithResult -> {
+            state.copy(Route())
+        }
+        else -> {
+            navigationReducer(action, state)
+        }
+    }
+}
 fun exploreCenterRequestExploresFailedReducer(action: Action, oldState: Throwable?): Throwable? {
     return when (action) {
         is ExploreCenterRequestExploresFailed -> {

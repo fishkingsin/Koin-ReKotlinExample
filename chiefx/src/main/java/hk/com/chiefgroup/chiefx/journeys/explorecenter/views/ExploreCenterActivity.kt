@@ -65,11 +65,17 @@ class ExploreCenterActivity : AppCompatActivity(), Subscriber<ExploreCenterState
         to: RouteSegment,
         animated: Boolean
     ): Routable {
+        println("changeRouteSegment $from $to")
         return this
     }
 
     override fun popRouteSegment(routeSegment: RouteSegment, animated: Boolean) {
-        println(routeSegment)
+        println("popRouteSegment $routeSegment")
+        if (routeSegment.toString() == "Root") {
+            store.unsubscribe(this)
+            finish()
+
+        }
     }
 
     override fun pushRouteSegment(routeSegment: RouteSegment, animated: Boolean): Routable {

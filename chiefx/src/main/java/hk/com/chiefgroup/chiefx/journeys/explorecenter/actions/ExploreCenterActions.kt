@@ -28,3 +28,5 @@ data class ExploreCenterSelectedCategory(val category: ExploreCategory) : Action
 
 }
 
+
+data class ExploreCenterRequestExploresExitWithResult(val unit: Unit = Unit) : Action {}
