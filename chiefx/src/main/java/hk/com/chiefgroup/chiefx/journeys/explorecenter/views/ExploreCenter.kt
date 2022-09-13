@@ -21,6 +21,8 @@ fun ExploreCenter(
     state: ObservableState<ExploreCenterState>
 ) {
     val navController = rememberNavController()
+    var router = state.current.navigationState?.route
+    println("ExploreCenter $router")
     NavHost(navController, startDestination = "explore center landing") {
         composable("explore center landing") {
             LaunchedEffect("key") { // probably is a better way to set the key than hardcoding key...

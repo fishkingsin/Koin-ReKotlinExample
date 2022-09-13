@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterReducer
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import org.rekotlin.store
 
@@ -69,7 +69,7 @@ fun TestExploreCenterCategoryItemVerticalListViewPreview() {
                     )
                 )
             ),
-            state = ObservableState(store(::ExploreCenterReducer, null))
+            state = ObservableState(store(::exploreCenterReducer, null))
         )
     }
 }

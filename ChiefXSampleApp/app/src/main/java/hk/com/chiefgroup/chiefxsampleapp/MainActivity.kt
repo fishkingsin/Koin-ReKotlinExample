@@ -5,11 +5,10 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterReducer
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.GetExploresThunk
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenter
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity(), Subscriber<ExploreCenterState>, Routab
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         store = store(
-            reducer = ::ExploreCenterReducer,
+            reducer = ::exploreCenterReducer,
             state = ExploreCenterState(),
             middleware = arrayOf(thunkMiddleware())
         )

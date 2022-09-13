@@ -22,7 +22,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterReducer
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.ExploreCenterSelectedCategoryThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.Devices
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
@@ -63,5 +63,5 @@ fun ExploreCenterItemHorizontalListView(
 @Composable
 fun ExploreCenterItemHorizontalListViewPreview() {
     ExploreCenterItemHorizontalListView(category = ExploreCategory(), state = ObservableState<ExploreCenterState>(store<ExploreCenterState>(
-        ::ExploreCenterReducer, null)))
+        ::exploreCenterReducer, null)))
 }

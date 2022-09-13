@@ -17,7 +17,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.ExploreCenterReducer
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import org.rekotlin.router.Route
 import org.rekotlin.router.SetRouteAction
@@ -81,6 +81,6 @@ fun Preview_HorizontalCadView() {
             Subtitle = "Subtitle",
             BannerUrl = "https://picsum.photos/600"
         ),
-        state = ObservableState(store(::ExploreCenterReducer, null))
+        state = ObservableState(store(::exploreCenterReducer, null))
     )
 }
