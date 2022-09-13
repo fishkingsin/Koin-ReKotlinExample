@@ -9,7 +9,7 @@ public abstract class ExploreCenterRepository {
 }
 
 
-class ExploreCenterRepositoryImplementation: ExploreCenterRepository() {
+open class ExploreCenterRepositoryImplementation: ExploreCenterRepository() {
     override suspend fun getExplores(): Result<ExploresReposonse> {
         val myJson = exploreCenterJSONString().trimIndent()
         val gson = Gson()

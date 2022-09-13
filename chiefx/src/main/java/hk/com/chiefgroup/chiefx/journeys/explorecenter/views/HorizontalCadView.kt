@@ -37,7 +37,7 @@ fun HorizontalCadView(
             .width(maxWidth)
 
             .padding(horizontal = 4.dp)
-            .clickable { state.dispatch(SetRouteAction(Route("root"))) }) {
+            .clickable { state.dispatch(SetRouteAction(Route("Root"))) }) {
         Column() {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)

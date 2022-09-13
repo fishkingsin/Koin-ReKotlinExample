@@ -1,18 +1,34 @@
 package hk.com.chiefgroup.chiefxsampleapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentCompositionLocalContext
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.GetExploresThunk
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenter
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterActivity
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateFactory
 import org.rekotlin.Store
 import org.rekotlin.Subscriber
 import org.rekotlin.router.*
@@ -20,61 +36,42 @@ import org.rekotlin.store
 import org.rekotlin.thunkMiddleware
 
 
-class MainActivity : AppCompatActivity(), Subscriber<ExploreCenterState>, Routable {
-
-    private lateinit var store: Store<ExploreCenterState>
-    private lateinit var router: Subscriber<NavigationState>
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        store = store(
-            reducer = ::exploreCenterReducer,
-            state = ExploreCenterState(),
-            middleware = arrayOf(thunkMiddleware())
-        )
-// crash here
-        router = router(rootRoutable = this, Handler(Looper.getMainLooper())::post)
-        // subscribe it to navigationState changes
-        store.subscribe(router, selector = {
-            select { navigationState ?: NavigationState() }
-        })
-        store.subscribe(this)
-
-        store.dispatch(SetRouteAction(Route("root")))
 
         setContent {
             MaterialTheme {
                 // in android compose scenario
-                ExploreCenter(ObservableState(store))
+                Main()
             }
         }
-        val repository = ExploreCenterRepositoryImplementation()
-        store.dispatch(GetExploresThunk(repository))
 
-
-    }
-    override fun newState(state: ExploreCenterState) {
-        Log.d("Main", "newState $state")
-
-    }
-
-    override fun changeRouteSegment(
-        from: RouteSegment,
-        to: RouteSegment,
-        animated: Boolean
-    ): Routable {
-        return this
-    }
-
-    override fun popRouteSegment(routeSegment: RouteSegment, animated: Boolean) {
-        println(routeSegment)
-    }
-
-    override fun pushRouteSegment(routeSegment: RouteSegment, animated: Boolean): Routable {
-        return this
     }
 }
 
 
+@Composable
+fun Main() {
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        ExploreCenterButton()
+    }
+}
+
+@Composable
+fun ExploreCenterButton() {
+    val context = LocalContext.current
+    Button(onClick = {
+        context.startActivity(Intent(context, ExploreCenterActivity::class.java))
+    }) {
+        Text(text = "Explore Center")
+    }
+}
 
 

@@ -45,7 +45,7 @@ fun ExploreCenterItemHorizontalListView(
                 state.dispatch(
                     ExploreCenterSelectedCategoryThunk(
                         category,
-                        state.current.navigationState?.route ?: Route("root")
+                        state.current.navigationState?.route ?: Route("Root")
                     )
                 )
             }

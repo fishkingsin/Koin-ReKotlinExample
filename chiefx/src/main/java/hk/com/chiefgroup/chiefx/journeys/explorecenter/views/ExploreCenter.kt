@@ -1,5 +1,6 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,24 +15,37 @@ import androidx.navigation.compose.rememberNavController
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+
+
 
 
 @Composable
 fun ExploreCenter(
     state: ObservableState<ExploreCenterState>
 ) {
-    val navController = rememberNavController()
-    var router = state.current.navigationState?.route
-    println("ExploreCenter $router")
-    NavHost(navController, startDestination = "explore center landing") {
-        composable("explore center landing") {
-            LaunchedEffect("key") { // probably is a better way to set the key than hardcoding key...
-                // temp solution on routing
-//                viewModel.navigateToExploreCenterDetails
-//                    .onEach { navController.navigate("details") }
-//                    .collect()
+//    val navController = rememberNavController()
+    when {
+        state.current.navigationState?.route?.toString() == "Root" -> {
 
-            }
+//    NavHost(navController, startDestination = "Root") {
+//        composable("Root") {
+//            LaunchedEffect("key") { // probably is a better way to set the key than hardcoding key...
+            // temp solution on routing
+//                state.navigateTo
+//                    .onEach { segments ->
+//                        Log.d("ExploreCenter", "navigate $segments")
+//
+//                            navController.navigate(segments.joinToString("/")) {
+//                                if (navController.backQueue.size < segments.size) {
+//                                    popUpTo(segments.last())
+//                                }
+//                            }
+//
+//                    }
+//                    .collect()
+//            }
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -42,16 +56,23 @@ fun ExploreCenter(
                     CircularProgressIndicator()
                 } else {
 
-                    ExploreCenterCategoryVerticalListView(state.current.categories ?: emptyList(), state)
+                    ExploreCenterCategoryVerticalListView(
+                        state.current.categories ?: emptyList(),
+                        state
+                    )
 
                 }
             }
+//        }
         }
-        composable("details") {
+        state.current.navigationState?.route.toString() == "Root/Category" -> {
+//        composable("Root/Category") {
             ExploreCenterCategoryItemVerticalListView(
                 state.current.selectedCategory ?: ExploreCategory(),
                 state
             )
+//        }
         }
+//    }
     }
 }

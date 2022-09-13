@@ -1,5 +1,6 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,8 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterSt
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
+import org.rekotlin.router.Route
+import org.rekotlin.router.SetRouteAction
 import org.rekotlin.store
 
 @Composable
@@ -24,6 +27,9 @@ fun ExploreCenterCategoryItemVerticalListView(
     category: ExploreCategory,
     state: ObservableState<ExploreCenterState>
 ) {
+
+    BackHandler { state.dispatch(SetRouteAction(Route("Root"))) }
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
