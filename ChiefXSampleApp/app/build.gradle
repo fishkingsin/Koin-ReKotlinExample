@@ -96,4 +96,6 @@ dependencies {
     implementation 'io.github.rakutentech.rekotlin:rekotlin:2.1.0'
     // ReKotlin-Router
     implementation 'io.github.rakutentech.rekotlin:rekotlin-router:1.0.0'
+    // Leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }

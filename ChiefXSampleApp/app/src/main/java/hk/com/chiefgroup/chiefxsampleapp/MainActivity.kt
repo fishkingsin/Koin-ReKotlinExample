@@ -39,11 +39,6 @@ class MainActivity : AppCompatActivity() {
 fun Main() {
     Scaffold(
         topBar = { TopAppBar(title = {Text("Main Activity")})  },
-        floatingActionButtonPosition = FabPosition.End,
-        floatingActionButton = { FloatingActionButton(onClick = {}){
-            Text("X")
-        } },
-        drawerContent = { Text(text = "drawerContent") },
         content = { padding ->
             val navigationController = rememberNavController()
             NavHost(navigationController, startDestination = "main") {
