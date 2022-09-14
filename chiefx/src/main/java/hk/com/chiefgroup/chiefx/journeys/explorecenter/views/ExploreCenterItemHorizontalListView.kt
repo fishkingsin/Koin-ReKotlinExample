@@ -43,10 +43,10 @@ fun ExploreCenterItemHorizontalListView(
 
 
 
-@Preview(device = Devices.PIXEL_2_XL)
+@Preview(device = Devices.PIXEL_2_XL, showSystemUi = true, showBackground = true)
 @Composable
 fun ExploreCenterItemHorizontalListViewPreview() {
-    ExploreCenterItemHorizontalListView(category = ExploreCategory(), onItemClick = {
+    ExploreCenterItemHorizontalListView(category = mockCategory(), onItemClick = {
         println("$it")
     })
 }

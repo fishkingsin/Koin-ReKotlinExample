@@ -56,6 +56,7 @@ fun ExploreCenterCategoryItemVerticalListView(
                 ) {
 
                 items(category.Records) { item ->
+                    Spacer(modifier = Modifier.padding(8.dp))
                     HorizontalCadView(
                         record = item,
                         maxWidth = 320.dp,
@@ -71,35 +72,39 @@ fun ExploreCenterCategoryItemVerticalListView(
     )
 }
 
+internal fun mockCategory(): ExploreCategory {
+    return ExploreCategory(
+        Records = arrayListOf(
+            ExploreItem(
+                Title = "Title",
+                Subtitle = "Subtitle",
+                BannerUrl = "https://picsum.photos/600"
+            ),
+            ExploreItem(
+                Title = "Title",
+                Subtitle = "Subtitle",
+                BannerUrl = "https://picsum.photos/600"
+            ),
+            ExploreItem(
+                Title = "Title",
+                Subtitle = "Subtitle",
+                BannerUrl = "https://picsum.photos/600"
+            ),
+            ExploreItem(
+                Title = "Title",
+                Subtitle = "Subtitle",
+                BannerUrl = "https://picsum.photos/600"
+            )
+        )
+    )
+
+}
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun TestExploreCenterCategoryItemVerticalListViewPreview() {
     MaterialTheme() {
         ExploreCenterCategoryItemVerticalListView(
-            category = ExploreCategory(
-                Records = arrayListOf(
-                    ExploreItem(
-                        Title = "Title",
-                        Subtitle = "Subtitle",
-                        BannerUrl = "https://picsum.photos/600"
-                    ),
-                    ExploreItem(
-                        Title = "Title",
-                        Subtitle = "Subtitle",
-                        BannerUrl = "https://picsum.photos/600"
-                    ),
-                    ExploreItem(
-                        Title = "Title",
-                        Subtitle = "Subtitle",
-                        BannerUrl = "https://picsum.photos/600"
-                    ),
-                    ExploreItem(
-                        Title = "Title",
-                        Subtitle = "Subtitle",
-                        BannerUrl = "https://picsum.photos/600"
-                    )
-                )
-            ),
+            category = mockCategory(),
             dispatcher = ObservableState(store(::exploreCenterReducer, null))
         )
     }
