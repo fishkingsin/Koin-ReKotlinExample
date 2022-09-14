@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.Dispatcher
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import org.rekotlin.router.Route
 import org.rekotlin.router.SetRouteAction
@@ -26,8 +26,8 @@ import org.rekotlin.store
 @Composable
 fun HorizontalCadView(
     record: ExploreItem,
-    state: ObservableState<ExploreCenterState>,
-    maxWidth: Dp = 240.dp
+    maxWidth: Dp = 240.dp,
+    clickable: () -> Unit
 ) {
 
 
@@ -37,7 +37,7 @@ fun HorizontalCadView(
             .width(maxWidth)
 
             .padding(horizontal = 4.dp)
-            .clickable { state.dispatch(SetRouteAction(Route("Root"))) }) {
+            .clickable { clickable }) {
         Column() {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -81,6 +81,6 @@ fun Preview_HorizontalCadView() {
             Subtitle = "Subtitle",
             BannerUrl = "https://picsum.photos/600"
         ),
-        state = ObservableState(store(::exploreCenterReducer, null))
+        clickable = { }
     )
 }

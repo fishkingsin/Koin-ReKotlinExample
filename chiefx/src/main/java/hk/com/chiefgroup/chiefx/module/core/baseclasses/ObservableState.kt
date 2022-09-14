@@ -14,11 +14,18 @@ import kotlinx.coroutines.runBlocking
 import org.rekotlin.Action
 import org.rekotlin.Store
 import org.rekotlin.Subscriber
+import org.rekotlin.router.Route
 import org.rekotlin.router.RouteSegment
+import org.rekotlin.router.SetRouteAction
 
+public interface Dispatcher {
+    public fun dispatch(action: Action)
+    public fun pop()
+    public fun push(segment: String)
+}
 
 open class ObservableState<T: BaseRoutableState>(var store: Store<T>) : ViewModel(),
-    Subscriber<T> {
+    Subscriber<T>, Dispatcher {
     companion object {
         private const val TAG = "StoreObservable"
     }
@@ -52,8 +59,25 @@ open class ObservableState<T: BaseRoutableState>(var store: Store<T>) : ViewMode
     }
 
     // MARK: Public methods
-    public fun dispatch(action: Action) {
+    public override fun dispatch(action: Action) {
         store.dispatch(action)
+    }
+
+    public override fun push(segment: String) {
+        current.navigationState?.route?.segments?.toMutableList()?.let {
+            var newSegment = it
+            newSegment.add(RouteSegment(segment))
+            store.dispatch(SetRouteAction(Route(newSegment)))
+        }
+
+    }
+
+    public override fun pop() {
+        current.navigationState?.route?.segments?.toMutableList()?.let {
+            var newSegment = it
+            newSegment.removeLast()
+            store.dispatch(SetRouteAction(Route(newSegment)))
+        }
     }
 }
 

@@ -3,6 +3,7 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.*
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploresReposonse
 import org.rekotlin.Action
 import org.rekotlin.router.NavigationState
@@ -15,6 +16,7 @@ fun exploreCenterReducer(action: Action, oldState: ExploreCenterState?): Explore
     println("action $action")
     return state.copy(
         selectedCategory = exploreCenterSelectedCategoryReducer(action, state.selectedCategory),
+        selectedItem = exploreCenterSelectedItemReducer(action, state.selectedItem),
         exploresResponse = exploreCenterRequestExploresReducer(action, state.exploresResponse),
         categories = exploreCenterRequestCategoriesReducer(action, state.categories),
         isLoading = exploreCenterRequestExploresStarted(action, state.isLoading),
@@ -88,6 +90,19 @@ fun exploreCenterSelectedCategoryReducer(action: Action, oldState: ExploreCatego
     return when (action) {
          is ExploreCenterSelectedCategory -> {
             action.category
+        }
+        else -> {
+            state
+        }
+    }
+
+}
+
+fun exploreCenterSelectedItemReducer(action: Action, oldState: ExploreItem?): ExploreItem {
+    val state = oldState ?: ExploreItem()
+    return when (action) {
+        is ExploreCenterSelectedItem -> {
+            action.item
         }
         else -> {
             state

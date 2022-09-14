@@ -14,9 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.ExploreCenterSelectedItemThunk
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.Dispatcher
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import org.rekotlin.router.Route
 import org.rekotlin.router.SetRouteAction
@@ -25,23 +26,29 @@ import org.rekotlin.store
 @Composable
 fun ExploreCenterCategoryItemVerticalListView(
     category: ExploreCategory,
-    state: ObservableState<ExploreCenterState>
+    dispatcher: Dispatcher
 ) {
 
-    BackHandler { state.dispatch(SetRouteAction(Route("Root"))) }
+    BackHandler { dispatcher.dispatch(SetRouteAction(Route("Root"))) }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
-        
-    ) {
+
+        ) {
 
         items(category.Records) { item ->
-            HorizontalCadView(record = item, state = state, maxWidth = 320.dp)
+            HorizontalCadView(
+                record = item,
+                state = dispatcher,
+                maxWidth = 320.dp,
+                clickable = {
+                    dispatcher.dispatch(ExploreCenterSelectedItemThunk(item, dispatcher))
+                })
             Spacer(modifier = Modifier.padding(8.dp))
         }
-        
+
 
     }
 }
@@ -75,7 +82,7 @@ fun TestExploreCenterCategoryItemVerticalListViewPreview() {
                     )
                 )
             ),
-            state = ObservableState(store(::exploreCenterReducer, null))
+            dispatcher = ObservableState(store(::exploreCenterReducer, null))
         )
     }
 }

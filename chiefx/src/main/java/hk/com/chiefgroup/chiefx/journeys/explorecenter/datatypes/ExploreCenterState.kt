@@ -10,5 +10,5 @@ data class ExploreCenterState(
     val error: Throwable? = null,
     val categories: ArrayList<ExploreCategory>? = null,
     val selectedCategory: ExploreCategory? = null,
-    val count: Int = 0,
+    val selectedItem: ExploreItem? = null,
 ): BaseRoutableState(navigationState)

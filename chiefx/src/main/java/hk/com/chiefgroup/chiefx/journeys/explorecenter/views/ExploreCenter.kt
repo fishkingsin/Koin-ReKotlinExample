@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -29,8 +30,9 @@ fun ExploreCenter(
     state: ObservableState<ExploreCenterState>
 ) {
 //    val navController = rememberNavController()
+    val route = state.current.navigationState?.route.toString()
     when {
-        state.current.navigationState?.route?.toString() == "Root" -> {
+        route == "Root" -> {
 
 //    NavHost(navController, startDestination = "Root") {
 //        composable("Root") {
@@ -52,13 +54,19 @@ fun ExploreCenter(
             Root(state)
 //        }
         }
-        state.current.navigationState?.route.toString() == "Root/Category" -> {
+        route == "Root/Category" -> {
 //        composable("Root/Category") {
             ExploreCenterCategoryItemVerticalListView(
                 state.current.selectedCategory ?: ExploreCategory(),
                 state
             )
 //        }
+        }
+        route == "Root/Category/Detail" || route == "Root/Detail" -> {
+            ExploreCenterItemDetailView(
+                state.current.selectedItem,
+                state
+            )
         }
 //    }
     }

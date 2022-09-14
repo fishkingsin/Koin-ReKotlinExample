@@ -1,6 +1,7 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.actions
 
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploresReposonse
 import org.rekotlin.Action
 
@@ -28,5 +29,8 @@ data class ExploreCenterSelectedCategory(val category: ExploreCategory) : Action
 
 }
 
+data class ExploreCenterSelectedItem(val item: ExploreItem) : Action {
+
+}
 
 data class ExploreCenterRequestExploresExitWithResult(val unit: Unit = Unit) : Action {}
