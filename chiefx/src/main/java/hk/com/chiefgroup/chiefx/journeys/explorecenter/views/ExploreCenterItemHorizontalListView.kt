@@ -47,6 +47,6 @@ fun ExploreCenterItemHorizontalListView(
 @Composable
 fun ExploreCenterItemHorizontalListViewPreview() {
     ExploreCenterItemHorizontalListView(category = ExploreCategory(), onItemClick = {
-
+        println("$it")
     })
 }

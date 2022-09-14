@@ -1,8 +1,6 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk
 
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterSelectedCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.actions.ExploreCenterSelectedItem
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.Dispatcher
