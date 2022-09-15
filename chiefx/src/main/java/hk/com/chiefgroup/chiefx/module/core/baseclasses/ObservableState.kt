@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -17,6 +18,7 @@ import org.rekotlin.Subscriber
 import org.rekotlin.router.Route
 import org.rekotlin.router.RouteSegment
 import org.rekotlin.router.SetRouteAction
+import javax.inject.Inject
 
 public interface Dispatcher {
     public fun dispatch(action: Action)
@@ -24,7 +26,8 @@ public interface Dispatcher {
     public fun push(segment: String)
 }
 
-open class ObservableState<T: BaseRoutableState>(var store: Store<T>) : ViewModel(),
+@HiltViewModel
+class ObservableState<T: BaseRoutableState> @Inject constructor(private var store: Store<T>) : ViewModel(),
     Subscriber<T>, Dispatcher {
     companion object {
         private const val TAG = "StoreObservable"

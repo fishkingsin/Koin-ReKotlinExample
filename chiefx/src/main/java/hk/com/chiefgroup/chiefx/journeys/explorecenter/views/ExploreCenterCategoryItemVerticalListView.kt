@@ -2,10 +2,7 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
@@ -49,7 +46,9 @@ fun ExploreCenterCategoryItemVerticalListView(
 
 
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(padding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -57,12 +56,14 @@ fun ExploreCenterCategoryItemVerticalListView(
 
                 items(category.Records) { item ->
                     Spacer(modifier = Modifier.padding(8.dp))
-                    HorizontalCadView(
-                        record = item,
-                        maxWidth = 320.dp,
-                        clickable = {
-                            dispatcher.dispatch(ExploreCenterSelectedItemThunk(item, dispatcher))
-                        })
+                    Column(Modifier.clickable {
+                        dispatcher.dispatch(ExploreCenterSelectedItemThunk(item, dispatcher))
+                    }) {
+                        HorizontalCadView(
+                            record = item,
+                            maxWidth = 320.dp,
+                            )
+                    }
                     Spacer(modifier = Modifier.padding(8.dp))
                 }
 

@@ -32,11 +32,16 @@ fun ExploreCenterItemHorizontalListView(
     ) {
 
         items(category.Records) { item ->
-            HorizontalCadView(
-                record = item,
-                maxWidth = if (category.ExplorerType == "wide") {300.dp} else { 120.dp },
-                clickable = { onItemClick(item) }
-            )
+            Column(Modifier.clickable { onItemClick(item) }) {
+                HorizontalCadView(
+                    record = item,
+                    maxWidth = if (category.ExplorerType == "wide") {
+                        300.dp
+                    } else {
+                        120.dp
+                    }
+                )
+            }
         }
     }
 }

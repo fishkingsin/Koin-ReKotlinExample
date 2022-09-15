@@ -51,7 +51,7 @@ internal fun exploreCenterJSONString(): String {
         				"Records": [
         					{
         						"SeqNo": 64741,
-        						"Title": "titlebat pine hit paper market salmon person branch flower widely frame week heart cutting call settle amount sometime old due orbit near now zero",
+        						"Title": "bat pine hit paper market",
         						"Subtitle": "11",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "1",
@@ -65,7 +65,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 40143,
-        						"Title": "titlemix third feathers remarkable class quite occasionally dust divide rise oldest dollar support journey baby time cold skill birth serve bear nervous donkey stop",
+        						"Title": "mix third feathers remark",
         						"Subtitle": "1",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "1",
@@ -79,7 +79,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 64693,
-        						"Title": "titlepress corn watch angle basis rule voyage move market place voice courage forty prove knife shadow smoke football flow rock jar driving quietly ear",
+        						"Title": "press corn watch angle ba",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "",
@@ -93,7 +93,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 5324,
-        						"Title": "titleinterior white raw metal produce sail glass flew silence rapidly reader post went tight wire warn score chapter planning drove taken brick shorter morning",
+        						"Title": "interior white raw metal ",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",
@@ -116,7 +116,7 @@ internal fun exploreCenterJSONString(): String {
         				"Records": [
         					{
         						"SeqNo": 47686,
-        						"Title": "titletie nature bean opinion butter color keep frame ring sleep easier strike element exactly case object power had breath satellites meal dug court bigger",
+        						"Title": "tie nature bean opinion b",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "En",
@@ -130,7 +130,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 855,
-        						"Title": "titleuncle large higher tank came word did size hand does steel consider though refer therefore pencil skin fallen dust rabbit cook slave castle flag",
+        						"Title": "uncle large higher tank c",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "eng",
@@ -144,7 +144,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 35,
-        						"Title": "titlehung tip picture ship sometime somehow fierce outside jar heat during but entirely of direct surprise desk look fully continued change hospital individual enemy",
+        						"Title": "hung tip picture ship som",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "eng",
@@ -158,7 +158,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 85,
-        						"Title": "titlepush gain try design trunk if space captured sudden characteristic turn coast shinning under master favorite changing sweet been rhythm pot birds exact office",
+        						"Title": "push gain try design trun",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "eng",
@@ -172,7 +172,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 115,
-        						"Title": "titlemoving go let secret sold pattern border bread captain zero flame naturally break vowel answer inch frame everywhere hand softly present animal whenever forgot",
+        						"Title": "moving go let secret sold",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "eng",
@@ -195,7 +195,7 @@ internal fun exploreCenterJSONString(): String {
         				"Records": [
         					{
         						"SeqNo": 72378,
-        						"Title": "titlebread full position health double not root next tea threw wealth exercise shop cheese sleep your careful recall record buffalo leather somehow light impossible",
+        						"Title": "bread full position healt",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",
@@ -209,7 +209,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 76434,
-        						"Title": "titledriving sharp close success dirt war everyone face avoid whose tired consist sudden guide danger along future after machinery never tea blank chose slowly",
+        						"Title": "driving sharp close succe",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",
@@ -223,7 +223,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 71434,
-        						"Title": "titleherself three felt plane flew missing tall calm official boat teeth equal step enemy equipment parallel would feel depth fresh quiet president reach date",
+        						"Title": "herself three felt plane ",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",
@@ -237,7 +237,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 14434,
-        						"Title": "titlelong sister given personal instrument loud country compound cloth success touch safe crack thumb scale warn replied fallen spent no got situation arrow solve",
+        						"Title": "long sister given persona",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",
@@ -251,7 +251,7 @@ internal fun exploreCenterJSONString(): String {
         					},
         					{
         						"SeqNo": 3434,
-        						"Title": "titlelayers doubt every carry shut beneath hung serve cream thread yard hole especially balance final believed find cup meal syllable compound nodded impossible done",
+        						"Title": "layers doubt every carry ",
         						"Subtitle": "testen",
         						"BannerUrl": "https://picsum.photos/600",
         						"WebsiteUrl": "en",

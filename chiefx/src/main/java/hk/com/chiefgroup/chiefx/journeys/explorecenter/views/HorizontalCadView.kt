@@ -27,17 +27,13 @@ import org.rekotlin.store
 fun HorizontalCadView(
     record: ExploreItem,
     maxWidth: Dp = 240.dp,
-    clickable: () -> Unit
 ) {
-
-
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .width(maxWidth)
-
             .padding(horizontal = 4.dp)
-            .clickable { clickable }) {
+    ) {
         Column() {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -80,7 +76,6 @@ fun Preview_HorizontalCadView() {
             Title = "Title",
             Subtitle = "Subtitle",
             BannerUrl = "https://picsum.photos/600"
-        ),
-        clickable = { }
+        )
     )
 }
