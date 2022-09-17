@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -25,6 +26,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        applicationVariants.all { variant ->
+            variant.sourceSets.java.each {
+                it.srcDirs += "build/generated/ksp/${variant.name}/kotlin"
+            }
         }
     }
     compileOptions {
@@ -98,4 +105,12 @@ dependencies {
     implementation 'io.github.rakutentech.rekotlin:rekotlin-router:1.0.0'
     // Leakcanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+
+    def koin_version = '3.2.1'
+    def koin_ksp_version= "1.0.2"
+
+    // Koin for Android
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-annotations:$koin_ksp_version"
+    ksp "io.insert-koin:koin-ksp-compiler:$koin_ksp_version"
 }

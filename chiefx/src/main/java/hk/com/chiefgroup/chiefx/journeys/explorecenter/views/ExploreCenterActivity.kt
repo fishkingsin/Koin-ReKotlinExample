@@ -6,21 +6,26 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.GetExploresThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateFactory
+import org.koin.android.ext.android.inject
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.createActivityScope
+import org.koin.core.scope.Scope
 import org.rekotlin.Store
 import org.rekotlin.Subscriber
 import org.rekotlin.router.*
-import org.rekotlin.store
-import org.rekotlin.thunkMiddleware
 
-class ExploreCenterActivity : AppCompatActivity(), Subscriber<ExploreCenterState>, Routable {
 
-    private lateinit var store: Store<ExploreCenterState>
+class ExploreCenterActivity: AppCompatActivity(), Subscriber<ExploreCenterState>, Routable,
+    AndroidScopeComponent {
+    override var scope: Scope? = null
+
+    private val store: Store<ExploreCenterState> by inject()
     private lateinit var router: Subscriber<NavigationState>
+
 
     private val state: ObservableState<ExploreCenterState> by viewModels {
         ObservableStateFactory(store)
@@ -28,11 +33,7 @@ class ExploreCenterActivity : AppCompatActivity(), Subscriber<ExploreCenterState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        store = store(
-            reducer = ::exploreCenterReducer,
-            state = ExploreCenterState(),
-            middleware = arrayOf(thunkMiddleware())
-        )
+        createActivityScope()
 
         router = router(rootRoutable = this)
         // subscribe it to navigationState changes
@@ -55,6 +56,7 @@ class ExploreCenterActivity : AppCompatActivity(), Subscriber<ExploreCenterState
 
 
     }
+
     override fun newState(state: ExploreCenterState) {
 //        Log.d("Main", "newState $state")
 

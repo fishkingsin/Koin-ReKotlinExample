@@ -18,11 +18,8 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.ExploreCenterSelectedItemThunk
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.dismissThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.Dispatcher
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
-import org.rekotlin.router.Route
-import org.rekotlin.router.SetRouteAction
 import org.rekotlin.store
 
 @Composable

@@ -1,6 +1,5 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -16,12 +15,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.reducer.exploreCenterReducer
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.Dispatcher
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
-import org.rekotlin.router.Route
-import org.rekotlin.router.SetRouteAction
-import org.rekotlin.store
 
 @Composable
 fun HorizontalCadView(
