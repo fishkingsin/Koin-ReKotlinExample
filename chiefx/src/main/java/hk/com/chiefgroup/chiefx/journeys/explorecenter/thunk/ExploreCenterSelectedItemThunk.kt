@@ -7,7 +7,9 @@ import hk.com.chiefgroup.chiefx.module.core.baseclasses.Dispatcher
 import org.rekotlin.DispatchFunction
 import org.rekotlin.Thunk
 
-public class ExploreCenterSelectedItemThunk(val state: ExploreItem, val dispatcher: Dispatcher):
+public class ExploreCenterSelectedItemThunk(
+    val state: ExploreItem,
+    private val dispatcher: Dispatcher):
     Thunk<ExploreCenterState> {
     override fun invoke(dispatch: DispatchFunction, getState: () -> ExploreCenterState?) {
         dispatch(ExploreCenterSelectedItem(state))

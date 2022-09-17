@@ -9,12 +9,21 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.Dispatcher
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
+import org.koin.androidx.compose.getKoin
+import org.koin.core.qualifier.named
 
 
 @Composable
-fun ExploreCenterItemDetailView(item: ExploreItem?, dispatcher: Dispatcher) {
+fun ExploreCenterItemDetailView(
+    item: ExploreItem?,
+    dispatcher: Dispatcher = getKoin()
+        .getScope(ExploreCenterActivity.scopeId)
+        .get<ObservableState<ExploreCenterState>>(qualifier = named(ExploreCenterActivity.viewModelQualifier))
+) {
     BackHandler { dispatcher.pop() }
 
     Scaffold(

@@ -10,7 +10,9 @@ import org.rekotlin.router.Route
 import org.rekotlin.router.RouteSegment
 import org.rekotlin.router.SetRouteAction
 
-public class ExploreCenterSelectedCategoryThunk(val state: ExploreCategory, val dispatcher: Dispatcher): Thunk<ExploreCenterState> {
+public class ExploreCenterSelectedCategoryThunk(
+    val state: ExploreCategory,
+    private val dispatcher: Dispatcher): Thunk<ExploreCenterState> {
     override fun invoke(dispatch: DispatchFunction, getState: () -> ExploreCenterState?) {
         dispatch(ExploreCenterSelectedCategory(category = state))
         dispatcher.push("Category")

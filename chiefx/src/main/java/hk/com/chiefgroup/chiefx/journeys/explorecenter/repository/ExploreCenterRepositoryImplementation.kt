@@ -2,34 +2,42 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.redux
 
 import com.google.gson.Gson
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploresReposonse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.lang.Thread.sleep
 
 public abstract class ExploreCenterRepository {
     abstract suspend fun getExplores(): Result<ExploresReposonse>
-    abstract fun getExplores(callback: (Result<ExploresReposonse>) -> Unit)
+    abstract suspend fun getExplores(callback: (Result<ExploresReposonse>) -> Unit)
 }
 
 
 open class ExploreCenterRepositoryImplementation: ExploreCenterRepository() {
     override suspend fun getExplores(): Result<ExploresReposonse> {
-        val myJson = exploreCenterJSONString().trimIndent()
-        val gson = Gson()
-        return try {
-            val response = gson.fromJson(myJson, ExploresReposonse::class.java)
-            Result.success(response)
-        } catch (exception: Exception) {
-            Result.failure(exception)
+        return withContext(Dispatchers.IO) {
+            val myJson = exploreCenterJSONString().trimIndent()
+            val gson = Gson()
+            sleep(3000)
+            return@withContext try {
+                val response = gson.fromJson(myJson, ExploresReposonse::class.java)
+                Result.success(response)
+            } catch (exception: Exception) {
+                Result.failure(exception)
+            }
         }
-
     }
 
-    override fun getExplores(callback: (Result<ExploresReposonse>) -> Unit) {
-        val myJson = exploreCenterJSONString().trimIndent()
-        val gson = Gson()
-        try {
-            val response = gson.fromJson(myJson, ExploresReposonse::class.java)
-            callback(Result.success(response))
-        } catch (exception: Exception) {
-            callback(Result.failure(exception))
+    override suspend fun getExplores(callback: (Result<ExploresReposonse>) -> Unit) {
+        withContext(Dispatchers.IO) {
+            val myJson = exploreCenterJSONString().trimIndent()
+            val gson = Gson()
+            sleep(3000)
+            try {
+                val response = gson.fromJson(myJson, ExploresReposonse::class.java)
+                callback(Result.success(response))
+            } catch (exception: Exception) {
+                callback(Result.failure(exception))
+            }
         }
     }
 

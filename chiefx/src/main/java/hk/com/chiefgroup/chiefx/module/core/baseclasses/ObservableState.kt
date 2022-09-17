@@ -30,6 +30,7 @@ class ObservableState<T: BaseRoutableState> (private var store: Store<T>) : View
     companion object {
         private const val TAG = "StoreObservable"
     }
+
     public var current by mutableStateOf(store.state)
     private var _navigateTo: Channel<List<String>> = Channel(Channel.BUFFERED)
 

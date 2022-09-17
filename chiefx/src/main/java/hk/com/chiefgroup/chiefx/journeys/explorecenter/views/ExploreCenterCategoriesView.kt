@@ -11,17 +11,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreItem
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.ExploreCenterSelectedCategoryThunk
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.ExploreCenterSelectedItemThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.Dispatcher
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
+import org.koin.androidx.compose.getKoin
+import org.koin.core.qualifier.named
 import org.rekotlin.Action
 
 
 @Composable
 fun ExploreCenterCategoriesView(
     categories: List<ExploreCategory>,
-    dispatcher: Dispatcher
+    dispatcher: Dispatcher = getKoin()
+        .getScope(ExploreCenterActivity.scopeId)
+        .get<ObservableState<ExploreCenterState>>(qualifier = named(ExploreCenterActivity.viewModelQualifier))
 ) {
     CategoryContentListview(
         categories = categories,
