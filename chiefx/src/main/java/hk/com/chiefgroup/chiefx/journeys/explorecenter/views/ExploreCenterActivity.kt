@@ -2,17 +2,17 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.GetExploresThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateFactory
 import org.koin.android.ext.android.inject
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.createActivityScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
 import org.rekotlin.Store
 import org.rekotlin.Subscriber
@@ -23,13 +23,13 @@ class ExploreCenterActivity: AppCompatActivity(), Subscriber<ExploreCenterState>
     AndroidScopeComponent {
     override var scope: Scope? = null
 
+    // di by host
     private val store: Store<ExploreCenterState> by inject()
+    // journey only routing
     private lateinit var router: Subscriber<NavigationState>
 
-
-    private val state: ObservableState<ExploreCenterState> by viewModels {
-        ObservableStateFactory(store)
-    }
+    // journey only ViewModel
+    private val state: ObservableState<ExploreCenterState> by viewModel { parametersOf(store) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,7 @@ class ExploreCenterActivity: AppCompatActivity(), Subscriber<ExploreCenterState>
         setContent {
             MaterialTheme {
                 // in android compose scenario
-                ExploreCenter(state)
+                ExploreCenter()
             }
         }
 
@@ -55,6 +55,11 @@ class ExploreCenterActivity: AppCompatActivity(), Subscriber<ExploreCenterState>
         store.dispatch(GetExploresThunk(repository))
 
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope?.close()
     }
 
     override fun newState(state: ExploreCenterState) {
