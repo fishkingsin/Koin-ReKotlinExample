@@ -13,32 +13,33 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.dismissThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
-import org.koin.androidx.compose.get
 
 
 @Composable
 fun ExploreCenter(
-    state: ObservableState<ExploreCenterState> = get()
+    state: ObservableState<ExploreCenterState>
 ) {
     when (state.current.navigationState?.route.toString()) {
         "Root" -> {
-            Root()
+            Root(state)
         }
         "Root/Category" -> {
             ExploreCenterCategoryItemVerticalListView(
                 state.current.selectedCategory ?: ExploreCategory(),
+                state
             )
         }
         "Root/Category/Detail", "Root/Detail" -> {
             ExploreCenterItemDetailView(
-                state.current.selectedItem
+                state.current.selectedItem,
+                state
             )
         }
     }
 }
 
 @Composable
-fun Root(state: ObservableState<ExploreCenterState> = get()) {
+fun Root(state: ObservableState<ExploreCenterState>) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -60,7 +61,8 @@ fun Root(state: ObservableState<ExploreCenterState> = get()) {
                 } else {
 
                     ExploreCenterCategoriesView(
-                        state.current.categories ?: emptyList()
+                        state.current.categories ?: emptyList(),
+                        state
                     )
 
                 }
