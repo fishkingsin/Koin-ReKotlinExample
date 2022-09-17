@@ -57,6 +57,11 @@ class ExploreCenterActivity: AppCompatActivity(), Subscriber<ExploreCenterState>
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        scope?.close()
+    }
+
     override fun newState(state: ExploreCenterState) {
 //        Log.d("Main", "newState $state")
 
