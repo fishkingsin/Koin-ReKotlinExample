@@ -1,18 +1,13 @@
 package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.DismissThunk
@@ -27,7 +22,7 @@ fun ExploreCenter(
         .getScope(ExploreCenterActivity.scopeId)
         .get(qualifier = named(ExploreCenterActivity.viewModelQualifier))
 ) {
-    LaunchedEffect(key1 = "key", block = {
+    LaunchedEffect(key1 = "onLaunch", block = {
         state.dispatch(GetExploresThunk())
     })
     when (state.current.navigationState?.route.toString()) {
@@ -45,7 +40,7 @@ fun ExploreCenter(
             )
         }
     }
-    CircularProgressIndicator()
+
 }
 
 @Composable

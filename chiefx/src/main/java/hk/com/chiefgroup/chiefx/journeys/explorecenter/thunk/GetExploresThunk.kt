@@ -5,6 +5,9 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterSt
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepository
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.qualifier.named
 import org.koin.java.KoinJavaComponent.getKoin
@@ -20,7 +23,7 @@ public class GetExploresThunk(
 ) : Thunk<ExploreCenterState> {
     override fun invoke(dispatch: DispatchFunction, getState: () -> ExploreCenterState?) {
         dispatch(ExploreCenterRequestExploresStarted())
-        runBlocking {
+        GlobalScope.launch(Dispatchers.IO) {
             val result = repository.getExplores()
             when {
                 result.isSuccess -> {
