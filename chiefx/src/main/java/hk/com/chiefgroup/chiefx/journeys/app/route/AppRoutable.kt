@@ -2,14 +2,12 @@ package hk.com.chiefgroup.chiefx.journeys.app.route
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.material.Text
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import hk.com.chiefgroup.chiefx.journeys.app.redux.AppState
 import hk.com.chiefgroup.chiefx.journeys.app.view.ExploreCenterBuilder
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterActivity
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterFragment
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import org.koin.java.KoinJavaComponent.getKoin
@@ -29,7 +27,8 @@ class AppRoutable(
 ) : Routable {
     companion object {
         const val exploreCenterViewId = "ExploreCenterView"
-        const val exploreCenterActivityID = "ExploreCenterActivity"
+        const val exploreCenterActivityId = "ExploreCenterActivity"
+        const val exploreCenterFragmentId = "ExploreCenterFragment"
     }
 //    private val homeScreen by lazy { HomeScreen(root) }
 //    private val historyScreen by lazy { HistoryScreen(root) }
@@ -40,8 +39,9 @@ class AppRoutable(
         println("routeSegment.id ${routeSegment.id}")
         val pop = when (routeSegment.id) {
             "App" -> showHome()
-            exploreCenterActivityID -> startExploreCenterActivity()
+            exploreCenterActivityId -> startExploreCenterActivity()
             exploreCenterViewId -> startExploreCenterView()
+            exploreCenterFragmentId -> startExploreCenterFragment()
             else -> null
         }
         pop?.let { popStack[routeSegment.id] = it }
@@ -79,6 +79,18 @@ class AppRoutable(
     private fun startExploreCenterView(): Pop {
         return {
             println("startExploreCenterView popped")
+            getKoin().getScope(ExploreCenterActivity.scopeId).close()
+        }
+    }
+
+    private fun startExploreCenterFragment(): Pop {
+        (context as? AppCompatActivity)
+        ?.supportFragmentManager
+        ?.beginTransaction()
+            ?.add(android.R.id.content, ExploreCenterFragment())
+            ?.commit()
+        return {
+            println("ExploreCenter Fragment popped")
             getKoin().getScope(ExploreCenterActivity.scopeId).close()
         }
     }

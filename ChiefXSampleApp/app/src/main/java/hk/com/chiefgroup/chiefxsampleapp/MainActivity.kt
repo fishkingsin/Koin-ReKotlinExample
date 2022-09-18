@@ -1,15 +1,16 @@
 package hk.com.chiefgroup.chiefxsampleapp
 
+import android.R
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.*
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import hk.com.chiefgroup.chiefx.journeys.app.redux.AppState
 import hk.com.chiefgroup.chiefx.journeys.app.route.AppRoutable
-import hk.com.chiefgroup.chiefx.journeys.app.view.Main
+import hk.com.chiefgroup.chiefx.journeys.app.view.MainViewFragment
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterFragment
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -40,11 +41,12 @@ class MainActivity : AppCompatActivity(), Subscriber<AppState> {
 
         store.subscribe(this)
         print(viewModel.current)
-        setContent {
-            MaterialTheme {
-                // in android compose scenario
-                Main()
-            }
+
+
+        if (supportFragmentManager.findFragmentById(R.id.content) == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.content, MainViewFragment())
+                .commit()
         }
 
     }

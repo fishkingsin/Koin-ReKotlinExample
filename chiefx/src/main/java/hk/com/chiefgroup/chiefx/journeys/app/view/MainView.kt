@@ -54,7 +54,8 @@ fun Main(
                         verticalArrangement = Arrangement.SpaceEvenly,
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        ExploreCenterButton()
+                        ExploreCenterActivityButton()
+                        ExploreCenterComposeButton()
                         ExploreCenterFragmentButton()
                     }
 
