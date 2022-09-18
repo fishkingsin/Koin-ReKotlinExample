@@ -30,8 +30,6 @@ class AppRoutable(
         const val exploreCenterActivityId = "ExploreCenterActivity"
         const val exploreCenterFragmentId = "ExploreCenterFragment"
     }
-//    private val homeScreen by lazy { HomeScreen(root) }
-//    private val historyScreen by lazy { HistoryScreen(root) }
     private val popStack = mutableMapOf<String, Pop>()
 
     override fun pushRouteSegment(routeSegment: RouteSegment, animated: Boolean): Routable {

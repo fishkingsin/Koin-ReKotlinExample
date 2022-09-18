@@ -23,7 +23,7 @@ public class GetExploresThunk(
 ) : Thunk<ExploreCenterState> {
     override fun invoke(dispatch: DispatchFunction, getState: () -> ExploreCenterState?) {
         dispatch(ExploreCenterRequestExploresStarted())
-        GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.Default) {
             val result = repository.getExplores()
             when {
                 result.isSuccess -> {

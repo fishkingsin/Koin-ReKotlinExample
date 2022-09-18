@@ -64,7 +64,7 @@ class ExploreCenterFragment : Fragment(), Routable, Subscriber<ExploreCenterStat
             setContent {
                 MaterialTheme {
                     // in android compose scenario
-                    ExploreCenter()
+                    ExploreCenter(state)
                 }
             }
         }
