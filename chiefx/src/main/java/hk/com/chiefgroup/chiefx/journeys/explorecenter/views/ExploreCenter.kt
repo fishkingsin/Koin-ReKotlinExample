@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import hk.com.chiefgroup.chiefx.journeys.app.redux.AppState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCategory
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.DismissThunk
@@ -15,6 +16,9 @@ import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.GetExploresThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import org.koin.androidx.compose.getKoin
 import org.koin.core.qualifier.named
+import org.rekotlin.Store
+import org.rekotlin.router.Route
+import org.rekotlin.router.SetRouteAction
 
 @Composable
 fun ExploreCenter(
@@ -47,7 +51,8 @@ fun ExploreCenter(
 fun Root(
     state: ObservableState<ExploreCenterState> = getKoin()
         .getScope(ExploreCenterActivity.scopeId)
-        .get(qualifier = named(ExploreCenterActivity.viewModelQualifier))
+        .get(qualifier = named(ExploreCenterActivity.viewModelQualifier)),
+    appStore: Store<AppState>? = getKoin().get()
 ) {
     Scaffold(
         topBar = {
@@ -56,7 +61,10 @@ fun Root(
                 navigationIcon = {
                     Text(
                         text = "Close",
-                        Modifier.clickable { state.dispatch(DismissThunk()) })
+                        Modifier.clickable {
+                            state.dispatch(DismissThunk())
+                            appStore?.dispatch(SetRouteAction(Route("App")))
+                        })
                 }
             )
         },

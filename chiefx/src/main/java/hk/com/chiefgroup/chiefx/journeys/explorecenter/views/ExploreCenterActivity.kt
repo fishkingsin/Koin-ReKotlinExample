@@ -3,19 +3,12 @@ package hk.com.chiefgroup.chiefx.journeys.explorecenter.views
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import hk.com.chiefgroup.chiefx.journeys.app.redux.AppState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.GetExploresThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateFactory
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
-import org.koin.android.scope.AndroidScopeComponent
-import org.koin.androidx.scope.createActivityScope
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
@@ -101,7 +94,7 @@ class ExploreCenterActivity: AppCompatActivity(), Subscriber<Boolean>, Routable,
         if (routeSegment.toString() == "Root") {
             store.unsubscribe(this)
             finish()
-            appStore?.dispatch(SetRouteAction(Route("App")))
+            appStore?.dispatch(SetRouteAction(Route(RouteSegment("App", "Greeting"))))
         }
     }
 

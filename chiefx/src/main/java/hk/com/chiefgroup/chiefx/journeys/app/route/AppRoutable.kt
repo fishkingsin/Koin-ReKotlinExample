@@ -2,13 +2,20 @@ package hk.com.chiefgroup.chiefx.journeys.app.route
 
 import android.content.Context
 import android.content.Intent
-import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterActivity
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import hk.com.chiefgroup.chiefx.journeys.app.redux.AppState
+import hk.com.chiefgroup.chiefx.journeys.app.view.ExploreCenterBuilder
+import hk.com.chiefgroup.chiefx.journeys.explorecenter.views.ExploreCenterActivity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import org.koin.java.KoinJavaComponent.getKoin
 import org.rekotlin.Store
-import org.rekotlin.router.*
-import kotlin.collections.mutableMapOf
+import org.rekotlin.router.Routable
+import org.rekotlin.router.RouteSegment
 import kotlin.collections.set
 
 private typealias Pop = () -> Unit
@@ -20,6 +27,10 @@ class AppRoutable(
     private val context: Context
 //    private val root: ViewGroup
 ) : Routable {
+    companion object {
+        const val exploreCenterViewId = "ExploreCenterView"
+        const val exploreCenterActivityID = "ExploreCenterActivity"
+    }
 //    private val homeScreen by lazy { HomeScreen(root) }
 //    private val historyScreen by lazy { HistoryScreen(root) }
     private val popStack = mutableMapOf<String, Pop>()
@@ -29,7 +40,8 @@ class AppRoutable(
         println("routeSegment.id ${routeSegment.id}")
         val pop = when (routeSegment.id) {
             "App" -> showHome()
-            "ExploreCenterActivity" -> startExploreCenterActivity()
+            exploreCenterActivityID -> startExploreCenterActivity()
+            exploreCenterViewId -> startExploreCenterView()
             else -> null
         }
         pop?.let { popStack[routeSegment.id] = it }
@@ -59,38 +71,23 @@ class AppRoutable(
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
         context.startActivity(intent)
         return {
-
+            println("ExploreCenterActivity popped")
+            getKoin().getScope(ExploreCenterActivity.scopeId).close()
         }
-//        root.attach(historyScreen.view)
-//
-//        val presenter = subscriber<List<User>> {
-//            historyScreen.updateHistory(it)
-//        }
-//
-//        store.subscribe(presenter) { select { history } }
-//
-//        return {
-//            root.detach(historyScreen.view)
-//            store.unsubscribe(presenter)
-//        }
+    }
+
+    private fun startExploreCenterView(): Pop {
+        return {
+            println("startExploreCenterView popped")
+            getKoin().getScope(ExploreCenterActivity.scopeId).close()
+        }
     }
 
     private fun showHome(): Pop {
         return {}
-//        root.attach(homeScreen.view)
-//
-//        val presenter = HomeScreenPresenter(homeScreen)
-//        // in a real application these behaviors would not be in the router
-//        // they would be in a separate object that encapsulates user input business logic.
-//        // But alas, this is a sample app, introducing more indirection makes it less readable.
-//        homeScreen.random { store.dispatch(FetchRandomUser(scope, dispatcher)) }
-//        homeScreen.goToHistory { store.dispatch(SetRouteAction(Route("history"))) }
-//
-//        store.subscribe(presenter)
-//
-//        return {
-//            root.detach(homeScreen.view)
-//            store.unsubscribe(presenter)
-//        }
+    }
+    @Composable
+    fun buildExploreCenter() {
+        ExploreCenterBuilder()
     }
 }

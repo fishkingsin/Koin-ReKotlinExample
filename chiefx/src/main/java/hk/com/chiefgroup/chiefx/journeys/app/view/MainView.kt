@@ -14,28 +14,39 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import hk.com.chiefgroup.chiefx.journeys.app.redux.AppState
+import hk.com.chiefgroup.chiefx.journeys.app.route.AppRoutable
+import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.compose.getKoin
 import org.koin.androidx.compose.getViewModel
 
 
 @Composable
 fun Main(
-    state: ObservableState<AppState> = getViewModel()
+    state: ObservableState<AppState> = getViewModel(),
+    route: AppRoutable = getKoin().get()
 ) {
+    val navigationController = rememberNavController()
     LaunchedEffect(key1 = "onMainViewLaunched", block = {
         state.navigateTo.onEach {
             println("Main $it")
+            if (it == listOf("App", "ExploreCenterView")) {
+                navigationController.navigate(it.last())
+            }
+            if (it == listOf("App")) {
+                navigationController.navigate(it.last())
+            }
         }.collect()
     })
-    Scaffold(
-        topBar = { TopAppBar(title = { Text("Main Activity") })  },
-        content = { padding ->
-            val navigationController = rememberNavController()
-            NavHost(navigationController, startDestination = "main") {
-                composable("main") {
+    NavHost(navigationController, startDestination = "App") {
+        composable("App") {
+            Scaffold(
+                topBar = { TopAppBar(title = { Text("Main Activity") }) },
+                content = { padding ->
+
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -46,9 +57,15 @@ fun Main(
                         ExploreCenterButton()
                         ExploreCenterFragmentButton()
                     }
-                }
-            }
-        }
-    )
-}
 
+
+                }
+
+            )
+
+        }
+        composable(AppRoutable.exploreCenterViewId) {
+            route.buildExploreCenter()
+        }
+    }
+}

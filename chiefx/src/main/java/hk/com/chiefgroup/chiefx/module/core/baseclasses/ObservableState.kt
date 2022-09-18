@@ -48,15 +48,16 @@ class ObservableState<T: BaseRoutableState> (
 
     override fun onCleared() {
         super.onCleared()
+        Log.d(TAG, "onCleared")
         store.unsubscribe(this)
     }
 
     @SuppressLint("LongLogTag")
     override fun newState(state: T) {
         scope.launch(dispatcher) {
-            println("state.navigationState?.route?.segments ${state.navigationState?.route?.segments}")
+            Log.d(TAG, "state.navigationState?.route?.segments ${state.navigationState?.route?.segments}")
             state.navigationState?.route?.segments?.let { segments ->
-                println("_navigateTo.send(${segments.map { it.id }})")
+                Log.d(TAG, "_navigateTo.send(${segments.map { it.id }})")
                 _navigateTo.send(segments.map { it.id })
             }
         }
