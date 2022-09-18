@@ -149,4 +149,5 @@ dependencies {
 
     def koin_ksp_version= "1.0.2"
     ksp "io.insert-koin:koin-ksp-compiler:$koin_ksp_version"
+
 }

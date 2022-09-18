@@ -6,11 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
+import hk.com.chiefgroup.chiefx.journeys.app.redux.AppState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.datatypes.ExploreCenterState
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.redux.ExploreCenterRepositoryImplementation
 import hk.com.chiefgroup.chiefx.journeys.explorecenter.thunk.GetExploresThunk
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableState
 import hk.com.chiefgroup.chiefx.module.core.baseclasses.ObservableStateFactory
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.createActivityScope
@@ -37,6 +39,8 @@ class ExploreCenterActivity: AppCompatActivity(), Subscriber<Boolean>, Routable,
     private val store: Store<ExploreCenterState> = scope.get(
         qualifier = named(storeQualifier))
     private lateinit var router: Subscriber<NavigationState>
+
+    private var appStore: Store<AppState>? = get()
 
     // demo
     private val state: ObservableState<ExploreCenterState> = scope.get(
@@ -97,7 +101,7 @@ class ExploreCenterActivity: AppCompatActivity(), Subscriber<Boolean>, Routable,
         if (routeSegment.toString() == "Root") {
             store.unsubscribe(this)
             finish()
-
+            appStore?.dispatch(SetRouteAction(Route("App")))
         }
     }
 

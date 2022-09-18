@@ -7,10 +7,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.runBlocking
 import org.rekotlin.Action
 import org.rekotlin.Store
 import org.rekotlin.Subscriber
@@ -25,11 +26,16 @@ public interface Dispatcher {
 }
 
 
-class ObservableState<T: BaseRoutableState> (private var store: Store<T>) : ViewModel(),
+class ObservableState<T: BaseRoutableState> (
+    private var store: Store<T>,
+
+) : ViewModel(),
     Subscriber<T>, Dispatcher {
     companion object {
         private const val TAG = "StoreObservable"
     }
+    private val scope: CoroutineScope = viewModelScope
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
     public var current by mutableStateOf(store.state)
     private var _navigateTo: Channel<List<String>> = Channel(Channel.BUFFERED)
@@ -42,21 +48,19 @@ class ObservableState<T: BaseRoutableState> (private var store: Store<T>) : View
 
     override fun onCleared() {
         super.onCleared()
-        store.subscribe(this)
+        store.unsubscribe(this)
     }
 
     @SuppressLint("LongLogTag")
     override fun newState(state: T) {
-        Log.d(TAG, "newState ${state.navigationState?.route}")
-        Log.d(TAG, "newState segment ${state.navigationState?.route?.segments}")
-        runBlocking {
+        scope.launch(dispatcher) {
+            println("state.navigationState?.route?.segments ${state.navigationState?.route?.segments}")
             state.navigationState?.route?.segments?.let { segments ->
-                Log.d(TAG, "_navigateTo.send(${segments.map { it.id }})")
+                println("_navigateTo.send(${segments.map { it.id }})")
                 _navigateTo.send(segments.map { it.id })
             }
         }
         current = state
-
 
     }
 

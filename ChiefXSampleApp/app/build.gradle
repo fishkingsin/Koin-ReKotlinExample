@@ -98,7 +98,6 @@ dependencies {
     def nav_version = "2.5.1"
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
-
     // ReKotlin
     implementation 'io.github.rakutentech.rekotlin:rekotlin:2.1.0'
     // ReKotlin-Router
@@ -113,4 +112,7 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-annotations:$koin_ksp_version"
     ksp "io.insert-koin:koin-ksp-compiler:$koin_ksp_version"
+    def koin_version_jetpack_compose = "3.2.0"
+    // Jetpack Compose
+    implementation("io.insert-koin:koin-androidx-compose:$koin_version_jetpack_compose")
 }
